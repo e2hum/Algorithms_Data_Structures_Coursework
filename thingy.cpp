@@ -228,7 +228,6 @@ class ArtCollectionTest {
 			}
 			
 	    void test_insert_artwork(){
-	    	
 	        if(my_collection.have == test_artwork) {
 	            cout << "Artwork inventories match!" << endl;
 	        }
@@ -257,60 +256,25 @@ class ArtCollectionTest {
 	        else
 	        	cout<<"Incorrect comparison";
 		}
+        void test_operators(){
+            ArtCollection temp, total;
+            Artwork a1("Keiquang", "integrals", 2020);
+	    	Artwork a2("mike", "this assignment hurts", 1997);
+	    	Artwork a3("Timmy", "fairies", 2004);
+            my_collection.insert_artwork(a1);
+            my_collection.insert_artwork(a2);
+            temp.insert_artwork(a3);
+            total.insert_artwork(a1);
+            total.insert_artwork(a2);
+            total.insert_artwork(a3);
+            if ((total == (my_collection+temp))&&!(total==temp))
+                cout<<"Correct + and = operator for collections"
+        }
 		
 };
 int main()
 {
     ArtCollectionTest test_collection;
     test_collection.run();
-	//Artwork a1("Jeremy", "number 1", 2020);
-/*
-	//insertion
-	test_insert_artwork(museum, a1);
-	test_insert_artwork(museum, a1);
-	Artwork a2("Evan", "bikes", 1996);
-	test_insert_artwork(museum, a2);
-	Artwork a3("Keiquang", "integrals", 2020);
-	
-	// sell artwork, selling the same artwork, selling an artwork that doesn't exist
-	SoldArtwork s1(a2, "bob", "bob's house", 20);
-	SoldArtwork s2(a3, "joe", "joe's house", 0);
-	test_sell_artwork(museum, s1);
-	test_sell_artwork(museum, s1);
-	test_sell_artwork(museum, s2);
-	
-	// operator== test for Artwork and SoldArtwork
-	cout << test_compare(a1,a1) << endl;
-	cout << test_compare(a1,a2) << endl;
-	cout << test_compare(s1,s1) << endl;
-	cout << test_compare(s1,s2) << endl;
-	
-	//test_insert_artwork(museum, a2);
-	
-	//test_sell_artwork(museum,a1,"mike", "UW", 17.99);
-	
-	//Artwork art("Evan", "planes", 2016);
-		
-
-   //sell an artwork
-    SoldArtwork s1(a1,"mike","mike's house", 10);
-    ac1.sell_artwork(s1);
-    s1.print();
-    
-    //second collection
-    ArtCollection ac2;
-
-	Artwork a4("Evan", "planes", 2016);	
-    ac2.insert_artwork(a4);
-    //inserts a fresh artwork
-    Artwork b1("Bob", "bob's building", 10);
-    ac2.insert_artwork(b1);
-    
-    //combines
-    ArtCollection ac3;
-    ac3 = ac3 + ac1;
-    ac3 = ac3 + ac2;
-    cout << ac3.size() << endl;
-*/
 }
 
