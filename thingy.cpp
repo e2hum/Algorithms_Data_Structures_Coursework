@@ -99,11 +99,9 @@ class ArtCollection
 		}
         if (!dupe){
             have.push_back(other);
-            cout << "Artwork added!" << endl;
             return true;
         }
 		else{
-            cout << "Insert failed. Duplicate artwork." << endl;
             return false;
         }
     }
@@ -115,11 +113,9 @@ class ArtCollection
                 sold.push_back(other);
                 have.erase(have.begin()+index);
                 index--;
-                cout << "Sold!" << endl;
                 return true;
             }
         }
-        cout << "Did not sell." << endl;
         return false;
     }
 	
@@ -174,47 +170,101 @@ ArtCollection operator+(ArtCollection& original, ArtCollection& other)
 class ArtCollectionTest {
     // has access to private members of ArtCollection
     private:
+        ArtCollection my_collection;
         vector<Artwork> test_artwork;
         vector<SoldArtwork> test_soldArtwork;
     public:
-        // test runner
+		// test runner
         void run() {
-            setup();
+        	//basic insertion test
+            setup1();
             test_insert_artwork();
+            reset();
+            //inserting 
+            setup2();
+            test_insert_artwork();
+            reset();
+            setup3();
             test_sell_artwork();
-            test_compare();
+            test_compare_art();
+            //sell something that doesnt exist
+            //adding duplicate
+            //+operator
+            //==operator
         }
         // initialize objects used in testing
-        void setup() {
-            //populate test_artwork
-            //populate test_soldArtwork
-
+        void setup1() {
+	        Artwork a2("Evan", "bikes", 1996);
+	    	Artwork a3("Keiquang", "integrals", 2020);
+	    	test_artwork.push_back(a2);
+			test_artwork.push_back(a3);
+			my_collection.insert_artwork(a2);
+			my_collection.insert_artwork(a3);
         }
-    bool test_insert_artwork(ArtCollection & collection,Artwork art){
-        if(collection.insert_artwork(art)){
-            return true;
+        void setup2() {
+        	setup1();
+			Artwork a1("Jeremy", "number 1", 2020);
+	    	test_artwork.push_back(a1);
         }
-        return false;
-    }
-
-    bool test_sell_artwork(ArtCollection & gallery, SoldArtwork sell){
-        //sell an artwork   
         
-        if(gallery.sell_artwork(sell)){
-            return true;
-        }
-        return false;
-    }
-
-    bool test_compare(Artwork one, Artwork two){
-        return (one==two);
-    }
+        void setup3() {
+        	setup1();
+        	Artwork a1("Jeremy", "number 1", 2020);
+        	my_collection.insert_artwork(a1);
+			SoldArtwork s1(a1, "joe", "joe's house", 0);
+			my_collection.sell_artwork(s1);
+			test_soldArtwork.push_back(s1);
+		}
+		
+        void reset() {
+        	for (int clear = 0; clear < my_collection.have.size(); clear++)
+        		my_collection.have.pop_back();
+        	for (int clear = 0; clear < test_artwork.size(); clear++)
+        		test_artwork.pop_back();
+			for (int clear = 0; clear < my_collection.sold.size(); clear++)
+        		my_collection.have.pop_back();
+        	for (int clear = 0; clear < test_soldArtwork.size(); clear++)
+        		test_soldArtwork.pop_back();
+			}
+			
+	    void test_insert_artwork(){
+	    	
+	        if(my_collection.have == test_artwork) {
+	            cout << "Artwork inventories match!" << endl;
+	        }
+	        else
+	            cout << "Artwork inventories do not match." << endl;
+	    }
+	
+	    void test_sell_artwork(){
+	        if(my_collection.sold == test_soldArtwork)
+	             cout << "Sold artwork inventories match!" << endl;
+	        else
+	        	cout << "Sold artwork inventories do not match." << endl;
+	    }
+	
+	    void test_compare_art(){
+	    	Artwork a1("Keiquang", "integrals", 2020);
+	    	Artwork a2("Keiquang", "integrals", 2020);
+	    	Artwork a3("Timmy", "fairies", 2004);
+	    	SoldArtwork x(a1, "bob", "bob's house", 20);
+			SoldArtwork y(a2, "bob", "bob's house", 20);
+			SoldArtwork z(a3, "joe", "joe's house", 0);
+	        if (x==y&&!(x==z))
+	        //sold artwork operator calls on the overloaded opertor== of artwork
+	        //thus this test proves both operate correctly
+	        	cout<<"Correct comparison";
+	        else
+	        	cout<<"Incorrect comparison";
+		}
+		
 };
 int main()
 {
-	ArtCollection museum;
-	Artwork a1("Jeremy", "number 1", 2020);
-	
+    ArtCollectionTest test_collection;
+    test_collection.run();
+	//Artwork a1("Jeremy", "number 1", 2020);
+/*
 	//insertion
 	test_insert_artwork(museum, a1);
 	test_insert_artwork(museum, a1);
@@ -241,7 +291,7 @@ int main()
 	
 	//Artwork art("Evan", "planes", 2016);
 		
-	/*
+
    //sell an artwork
     SoldArtwork s1(a1,"mike","mike's house", 10);
     ac1.sell_artwork(s1);
@@ -261,6 +311,6 @@ int main()
     ac3 = ac3 + ac1;
     ac3 = ac3 + ac2;
     cout << ac3.size() << endl;
-    */
+*/
 }
 
