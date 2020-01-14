@@ -155,6 +155,7 @@ class ArtCollection
 	}
 
     friend ArtCollection operator+(ArtCollection& original, ArtCollection& other);
+    friend class ArtCollectionTest;
 };	
 
 
@@ -170,26 +171,45 @@ ArtCollection operator+(ArtCollection& original, ArtCollection& other)
     return temp;
 }
 
+class ArtCollectionTest {
+    // has access to private members of ArtCollection
+    private:
+        vector<Artwork> test_artwork;
+        vector<SoldArtwork> test_soldArtwork;
+    public:
+        // test runner
+        void run() {
+            setup();
+            test_insert_artwork();
+            test_sell_artwork();
+            test_compare();
+        }
+        // initialize objects used in testing
+        void setup() {
+            //populate test_artwork
+            //populate test_soldArtwork
 
-bool test_insert_artwork(ArtCollection & collection,Artwork art){
-    if(collection.insert_artwork(art)){
-    	return true;
-	}
-	return false;
-}
+        }
+    bool test_insert_artwork(ArtCollection & collection,Artwork art){
+        if(collection.insert_artwork(art)){
+            return true;
+        }
+        return false;
+    }
 
-bool test_sell_artwork(ArtCollection & gallery, SoldArtwork sell){
-    //sell an artwork   
-    
-    if(gallery.sell_artwork(sell)){
-    	return true;
-	}
-	return false;
-}
+    bool test_sell_artwork(ArtCollection & gallery, SoldArtwork sell){
+        //sell an artwork   
+        
+        if(gallery.sell_artwork(sell)){
+            return true;
+        }
+        return false;
+    }
 
-bool test_compare(Artwork one, Artwork two){
-	return (one==two);
-}
+    bool test_compare(Artwork one, Artwork two){
+        return (one==two);
+    }
+};
 int main()
 {
 	ArtCollection museum;
