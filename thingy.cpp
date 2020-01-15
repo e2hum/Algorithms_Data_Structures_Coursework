@@ -145,8 +145,6 @@ class ArtCollection
             if (count == sold.size())
                 return true;
         }
-
-
         return false;
 	}
 
@@ -187,8 +185,14 @@ class ArtCollectionTest {
             setup3();
             test_sell_artwork();
             test_compare_art();
+<<<<<<< Updated upstream
             //sell something that doesnt exist
             //adding duplicate
+=======
+            reset();
+			cout << endl << "5. Testing == and + operator of ArtCollection" << endl;
+			test_operators();
+>>>>>>> Stashed changes
             //+operator
             //==operator
         }
@@ -219,11 +223,19 @@ class ArtCollectionTest {
         void reset() {
         	for (int clear = 0; clear < my_collection.have.size(); clear++)
         		my_collection.have.pop_back();
+<<<<<<< Updated upstream
         	for (int clear = 0; clear < test_artwork.size(); clear++)
         		test_artwork.pop_back();
 			for (int clear = 0; clear < my_collection.sold.size(); clear++)
         		my_collection.have.pop_back();
         	for (int clear = 0; clear < test_soldArtwork.size(); clear++)
+=======
+         	for (int clear = 0; clear < test_artwork_size; clear++)
+        		test_artwork.pop_back();
+			for (int clear = 0; clear < sold_size; clear++)
+        		my_collection.sold.pop_back();
+        	for (int clear = 0; clear < test_soldArtwork_size; clear++)
+>>>>>>> Stashed changes
         		test_soldArtwork.pop_back();
 			}
 			
@@ -253,16 +265,38 @@ class ArtCollectionTest {
 	        if (x==y&&!(x==z))
 	        //sold artwork operator calls on the overloaded opertor== of artwork
 	        //thus this test proves both operate correctly
-	        	cout<<"Correct comparison";
+	        	cout<<"Correct comparison." << endl;
 	        else
-	        	cout<<"Incorrect comparison";
+	        	cout<<"Incorrect comparison."<< endl;
 		}
+<<<<<<< Updated upstream
+=======
+        void test_operators(){
+            ArtCollection total,temp;
+            Artwork a1("Keiquang", "integrals", 2020);
+	    	Artwork a2("mike", "this assignment hurts", 1997);
+	    	Artwork a3("Timmy", "fairies", 2004);
+			total.insert_artwork(a1);
+            total.insert_artwork(a2);
+            total.insert_artwork(a3);
+            temp.insert_artwork(a1);
+            my_collection.insert_artwork(a2);
+            my_collection.insert_artwork(a3);
+    		if ((total == (my_collection + temp)) && !(total == temp)){
+				cout<<"Operators worked.";
+			}
+			else{
+				cout<<"Operators did not work.";
+			}
+        }
+>>>>>>> Stashed changes
 		
 };
 int main()
 {
     ArtCollectionTest test_collection;
     test_collection.run();
+<<<<<<< Updated upstream
 	//Artwork a1("Jeremy", "number 1", 2020);
 /*
 	//insertion
@@ -312,5 +346,8 @@ int main()
     ac3 = ac3 + ac2;
     cout << ac3.size() << endl;
 */
+=======
+       
+>>>>>>> Stashed changes
 }
 
