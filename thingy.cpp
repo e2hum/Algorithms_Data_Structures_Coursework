@@ -185,14 +185,9 @@ class ArtCollectionTest {
             setup3();
             test_sell_artwork();
             test_compare_art();
-<<<<<<< Updated upstream
-            //sell something that doesnt exist
-            //adding duplicate
-=======
             reset();
 			cout << endl << "5. Testing == and + operator of ArtCollection" << endl;
 			test_operators();
->>>>>>> Stashed changes
             //+operator
             //==operator
         }
@@ -223,19 +218,11 @@ class ArtCollectionTest {
         void reset() {
         	for (int clear = 0; clear < my_collection.have.size(); clear++)
         		my_collection.have.pop_back();
-<<<<<<< Updated upstream
-        	for (int clear = 0; clear < test_artwork.size(); clear++)
-        		test_artwork.pop_back();
-			for (int clear = 0; clear < my_collection.sold.size(); clear++)
-        		my_collection.have.pop_back();
-        	for (int clear = 0; clear < test_soldArtwork.size(); clear++)
-=======
          	for (int clear = 0; clear < test_artwork_size; clear++)
         		test_artwork.pop_back();
 			for (int clear = 0; clear < sold_size; clear++)
         		my_collection.sold.pop_back();
         	for (int clear = 0; clear < test_soldArtwork_size; clear++)
->>>>>>> Stashed changes
         		test_soldArtwork.pop_back();
 			}
 			
@@ -269,8 +256,6 @@ class ArtCollectionTest {
 	        else
 	        	cout<<"Incorrect comparison."<< endl;
 		}
-<<<<<<< Updated upstream
-=======
         void test_operators(){
             ArtCollection total,temp;
             Artwork a1("Keiquang", "integrals", 2020);
@@ -289,65 +274,12 @@ class ArtCollectionTest {
 				cout<<"Operators did not work.";
 			}
         }
->>>>>>> Stashed changes
 		
 };
 int main()
 {
     ArtCollectionTest test_collection;
     test_collection.run();
-<<<<<<< Updated upstream
-	//Artwork a1("Jeremy", "number 1", 2020);
-/*
-	//insertion
-	test_insert_artwork(museum, a1);
-	test_insert_artwork(museum, a1);
-	Artwork a2("Evan", "bikes", 1996);
-	test_insert_artwork(museum, a2);
-	Artwork a3("Keiquang", "integrals", 2020);
-	
-	// sell artwork, selling the same artwork, selling an artwork that doesn't exist
-	SoldArtwork s1(a2, "bob", "bob's house", 20);
-	SoldArtwork s2(a3, "joe", "joe's house", 0);
-	test_sell_artwork(museum, s1);
-	test_sell_artwork(museum, s1);
-	test_sell_artwork(museum, s2);
-	
-	// operator== test for Artwork and SoldArtwork
-	cout << test_compare(a1,a1) << endl;
-	cout << test_compare(a1,a2) << endl;
-	cout << test_compare(s1,s1) << endl;
-	cout << test_compare(s1,s2) << endl;
-	
-	//test_insert_artwork(museum, a2);
-	
-	//test_sell_artwork(museum,a1,"mike", "UW", 17.99);
-	
-	//Artwork art("Evan", "planes", 2016);
-		
-
-   //sell an artwork
-    SoldArtwork s1(a1,"mike","mike's house", 10);
-    ac1.sell_artwork(s1);
-    s1.print();
-    
-    //second collection
-    ArtCollection ac2;
-
-	Artwork a4("Evan", "planes", 2016);	
-    ac2.insert_artwork(a4);
-    //inserts a fresh artwork
-    Artwork b1("Bob", "bob's building", 10);
-    ac2.insert_artwork(b1);
-    
-    //combines
-    ArtCollection ac3;
-    ac3 = ac3 + ac1;
-    ac3 = ac3 + ac2;
-    cout << ac3.size() << endl;
-*/
-=======
        
->>>>>>> Stashed changes
 }
 
