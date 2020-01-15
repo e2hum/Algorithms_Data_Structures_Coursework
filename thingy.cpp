@@ -95,6 +95,7 @@ class ArtCollection
         for(vector<Artwork>::iterator my_it=have.begin();my_it!=have.end();my_it++){
             if (other == *my_it){
                 dupe = true;
+                cout << "Duplicate found. Artwork not added." << endl;
             }
 		}
         if (!dupe){
@@ -116,6 +117,7 @@ class ArtCollection
                 return true;
             }
         }
+        cout << "Artwork not found. Cannot sell." << endl;
         return false;
     }
 	
@@ -174,16 +176,18 @@ class ArtCollectionTest {
     public:
 		// test runner
         void run() {
-        	//basic insertion test
+        	cout << "1. Inserting artwork (should match) includes a duplicate" << endl;
             setup1();
             test_insert_artwork();
             reset();
-            //inserting 
+            cout << endl << "2. Inserting artwork (should not match)" << endl;
             setup2();
             test_insert_artwork();
             reset();
+            cout << endl << "3. Selling artwork (should match) includes selling an artwork that does not exist" << endl;
             setup3();
             test_sell_artwork();
+            cout << endl << "4. Comparing artworks and sold artworks (should match)" << endl;
             test_compare_art();
             reset();
 			cout << endl << "5. Testing == and + operator of ArtCollection" << endl;
@@ -198,25 +202,33 @@ class ArtCollectionTest {
 	    	test_artwork.push_back(a2);
 			test_artwork.push_back(a3);
 			my_collection.insert_artwork(a2);
+            my_collection.insert_artwork(a2);
 			my_collection.insert_artwork(a3);
         }
         void setup2() {
-        	setup1();
 			Artwork a1("Jeremy", "number 1", 2020);
+			Artwork a2("Evan", "bikes", 1996);
+	    	Artwork a3("Keiquang", "integrals", 2020);
 	    	test_artwork.push_back(a1);
         }
         
         void setup3() {
-        	setup1();
         	Artwork a1("Jeremy", "number 1", 2020);
+        	Artwork a2("Evan", "bikes", 1996);
+	    	Artwork a3("Keiquang", "integrals", 2020);
         	my_collection.insert_artwork(a1);
 			SoldArtwork s1(a1, "joe", "joe's house", 0);
 			my_collection.sell_artwork(s1);
 			test_soldArtwork.push_back(s1);
+			my_collection.sell_artwork(s1);
 		}
 		
         void reset() {
-        	for (int clear = 0; clear < my_collection.have.size(); clear++)
+        	int have_size = my_collection.have.size(),
+        		test_artwork_size = test_artwork.size(),
+        		sold_size = my_collection.sold.size(),
+        		test_soldArtwork_size = test_soldArtwork.size();
+        	for (int clear = 0; clear < have_size; clear++)
         		my_collection.have.pop_back();
          	for (int clear = 0; clear < test_artwork_size; clear++)
         		test_artwork.pop_back();
@@ -227,7 +239,6 @@ class ArtCollectionTest {
 			}
 			
 	    void test_insert_artwork(){
-	    	
 	        if(my_collection.have == test_artwork) {
 	            cout << "Artwork inventories match!" << endl;
 	        }
