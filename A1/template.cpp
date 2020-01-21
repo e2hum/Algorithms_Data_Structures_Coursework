@@ -3,6 +3,7 @@
 #include <cstdlib> //for everything
 #include <cmath> //for math operations
 #include <iomanip> //output formatting
+#include "polynomial.h"
 
 using namespace std; //set std namespace
 
