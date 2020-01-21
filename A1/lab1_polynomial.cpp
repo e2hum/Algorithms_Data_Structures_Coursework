@@ -55,10 +55,9 @@ Polynomial::Polynomial(string fileName){
 	//my_ifstream.open(filename.c_str)
 }
 
-        ~Polynomial(){
-			delete[]data;
-		}
-};
+~Polynomial::Polynomial(){
+	delete[]data;
+}
 
 int main()
 {
