@@ -34,12 +34,16 @@ class Polynomial
 
 		Polynomial(string fileName){
 			ifstream fin(fileName);
-			//check for failure
-			if (!fin.fail()){
-
+			int size = 0;
+			if (!fin.fail()){ //check for failure
+				fin>>size; //first variable is size
+				data = new int [size];
+				data_size = size;
+				for(int index = 0; index < size; index++){
+					fin>>data[index];
+				}
+				fin.close();
 			}
-
-			fin.close();
 			//my_ifstream.open(filename.c_str)
 		}
 
