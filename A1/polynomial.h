@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef polynomial
 #define polynomial
 
@@ -11,5 +13,6 @@ class Polynomial
         Polynomial(int A[], int size);
         Polynomial();
         ~Polynomial();
+        void print();
 };
 #endif

@@ -8,36 +8,42 @@
 
 using namespace std; //set std namespace
 
-class Polynomial
+
+Polynomial::Polynomial(int A[], int size){
+	data = new int [size];
+	data_size = size;
+	for (int index = size; index > 0; index--){
+		data[index] = A[index];
+	}
+}
+Polynomial::Polynomial(){
+	int randomNum = rand() %1001;
+	data = new int [randomNum];
+	data_size = randomNum;
+	for (int index = 0; index < randomNum; index++){
+		data[index] = rand() % 2001 + (-1000);
+	}
+}
+
+void Polynomial::print()
 {
-    // private attributes
-    int* data;
-    int data_size;
+	for (int index = 0; index < data_size; index++)
+	{
+		if (index == 0)
+			cout << data[index] << "x^" << index;
+		else
+			cout << " + " << data[index] << "x^" << index;
+	}
+}
 
-    public:
-        Polynomial(int A[], int size){
-			data = new int [size];
-			data_size = size;
-			for (int index = size; index > 0; index--){
-				data[index] = A[index];
-			}
-		}
-		Polynomial(){
-			int randomNum = rand() %1001;
-			data = new int [randomNum];
-			data_size = randomNum;
-			for (int index = 0; index < randomNum; index++){
-				data[index] = rand() % 2001 + (-1000);
-			}
-		}
-
-        ~Polynomial(){
-			delete[]data;
-		}
-};
+Polynomial::~Polynomial(){
+	delete[]data;
+}
 
 int main()
 {
 	srand(time(0));
+	Polynomial test;
+	test.print();
 	return EXIT_SUCCESS;
 }
