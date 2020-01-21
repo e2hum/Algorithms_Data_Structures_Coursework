@@ -33,8 +33,9 @@ class Polynomial
 		}
 
 		Polynomial(string fileName){
-			ifstream fin(fileName);
+			ifstream fin;
 			int size = 0;
+			fin.open(fileName)
 			if (!fin.fail()){ //check for failure
 				fin>>size; //first variable is size
 				data = new int [size];
