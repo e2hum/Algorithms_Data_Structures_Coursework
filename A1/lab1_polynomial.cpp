@@ -4,6 +4,7 @@
 #include <cmath> //for math operations
 #include <iomanip> //output formatting
 #include "polynomial.h"
+#include <fstream>
 
 using namespace std; //set std namespace
 
@@ -28,6 +29,17 @@ class Polynomial
 			for (int index = 0; index < rand; index++){
 				data[index] = 123//insert rng here
 			}
+		}
+
+		Polynomial(string fileName){
+			ifstream fin(fileName);
+			//check for failure
+			if (!fin.fail()){
+
+			}
+
+			fin.close();
+			//my_ifstream.open(filename.c_str)
 		}
 
         ~Polynomial(){
