@@ -9,6 +9,7 @@ class Polynomial
 
     public:
         Polynomial(int A[], int size);
+        Polynomial();
         ~Polynomial();
 };
 #endif

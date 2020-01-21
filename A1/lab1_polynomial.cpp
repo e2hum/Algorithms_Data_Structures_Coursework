@@ -3,6 +3,7 @@
 #include <cstdlib> //for everything
 #include <cmath> //for math operations
 #include <iomanip> //output formatting
+#include <ctime>
 #include "polynomial.h"
 #include <fstream>
 
@@ -23,11 +24,11 @@ class Polynomial
 			}
 		}
 		Polynomial(){
-			int rand = 123;//insert rng here
-			data = new int [rand];
-			data_size = rand;
-			for (int index = 0; index < rand; index++){
-				data[index] = 123//insert rng here
+			int randomNum = rand() %1001;
+			data = new int [randomNum];
+			data_size = randomNum;
+			for (int index = 0; index < randomNum; index++){
+				data[index] = rand() % 2001 + (-1000);
 			}
 		}
 
@@ -49,5 +50,6 @@ class Polynomial
 
 int main()
 {
+	srand(time(0));
 	return EXIT_SUCCESS;
 }
