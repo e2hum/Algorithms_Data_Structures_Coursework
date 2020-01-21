@@ -12,6 +12,7 @@ class Polynomial
     public:
         Polynomial(int A[], int size);
         Polynomial();
+        Polynomial(string fileName);
         ~Polynomial();
         void print();
 };

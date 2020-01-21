@@ -5,6 +5,7 @@
 #include <iomanip> //output formatting
 #include <ctime>
 #include "polynomial.h"
+#include <fstream>
 
 using namespace std; //set std namespace
 
@@ -39,6 +40,25 @@ void Polynomial::print()
 Polynomial::~Polynomial(){
 	delete[]data;
 }
+Polynomial::Polynomial(string fileName){
+	ifstream fin(fileName);
+	int size = 0;
+	if (!fin.fail()){ //check for failure
+		fin>>size; //first variable is size
+		data = new int [size];
+		data_size = size;
+		for(int index = 0; index < size; index++){
+			fin>>data[index];
+		}
+		fin.close();
+	}
+	//my_ifstream.open(filename.c_str)
+}
+
+        ~Polynomial(){
+			delete[]data;
+		}
+};
 
 int main()
 {
