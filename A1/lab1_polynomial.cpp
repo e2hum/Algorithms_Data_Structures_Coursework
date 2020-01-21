@@ -21,6 +21,15 @@ class Polynomial
 				data[index] = A[index];
 			}
 		}
+		Polynomial(){
+			int rand = 123;//insert rng here
+			data = new int [rand];
+			data_size = rand;
+			for (int index = 0; index < rand; index++){
+				data[index] = 123//insert rng here
+			}
+		}
+
         ~Polynomial(){
 			delete[]data;
 		}
