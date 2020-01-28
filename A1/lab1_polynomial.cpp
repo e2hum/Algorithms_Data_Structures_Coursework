@@ -14,7 +14,7 @@ using namespace std; //set std namespace
 Polynomial::Polynomial(int A[], int size){
 	data = new int [size];
 	data_size = size;
-	for (int index = size; index > 0; index--){
+	for (int index = 0; index < size; index++){
 		data[index] = A[index];
 	}
 }
@@ -75,10 +75,11 @@ bool Polynomial::operator==(const Polynomial & target) const
 int main()
 {
 	srand(time(0));
-	Polynomial test1;
-	Polynomial test2;
-	Polynomial p = test1;
-	//test1.print();
+	int A[3] = {1,2,3};
+	int B[3] = {4,5,6};
+	Polynomial test1(A,3);
+	Polynomial test2(B,3);
+	test1.print();
 	cout << (test1 == test2);
 	cout << (test1 == test1);
 	return EXIT_SUCCESS;
