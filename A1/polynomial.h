@@ -20,5 +20,7 @@ class Polynomial
         int get_data_size();
         void print();
         bool operator==(const Polynomial & target) const;
+        Polynomial operator+(const Polynomial & target);
+        Polynomial derivative();
 };
 #endif

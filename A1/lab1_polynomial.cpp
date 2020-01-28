@@ -72,6 +72,39 @@ bool Polynomial::operator==(const Polynomial & target) const
 	return true;
 }
 
+Polynomial Polynomial::operator+(const Polynomial &target){
+	int smaller_size = 0;
+	
+	Polynomial result;
+	if (target.data_size>data_size){
+		//saves size of smaller as the number of overlappinng
+		smaller_size = (*this).get_data_size();
+		//saves larger of the two into result
+		result = target;
+	}else{
+		smaller_size = target.data_size;
+		result = (*this);
+	}
+
+	//rewrites overlapping data with sum of two, non-overlapping stays
+	for (int index = 0; index < smaller_size; index++){
+		result.data[index] = (*this).data[index] + target.data[index];
+	}
+	return result;
+	
+}
+
+Polynomial Polynomial::derivative(){
+	//multiplies every coefficient with power
+	for (int  index = 0; index < data_size; index++){
+		data[index] *= index;
+	}
+	//removes last term and shifts array
+	for (int  index = 0; index < data_size-1; index++){
+		data[index] = data[index+1];
+	}
+	data[data_size-1] = 0;
+}
 int main()
 {
 	srand(time(0));
@@ -79,8 +112,14 @@ int main()
 	int B[3] = {4,5,6};
 	Polynomial test1(A,3);
 	Polynomial test2(B,3);
-	test1.print();
+	//test1.print();
+	Polynomial add = test1+test2;
+	add.print();
+	cout<<endl;
+	add.derivative();
+	add.print();
+	/*
 	cout << (test1 == test2);
 	cout << (test1 == test1);
-	return EXIT_SUCCESS;
+	*/return EXIT_SUCCESS;
 }
