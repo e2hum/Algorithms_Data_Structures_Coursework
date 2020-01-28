@@ -59,8 +59,8 @@ void Polynomial::print() {
 			cout << data[index] << "x^" << index;
 			first = true;
 		}
-		else if (data[index] == 0 && data[index] !=0 && first == true)
-			cout << " + " << index;
+		else if (index == 0 && data[index] !=0 && first == true)
+			cout << " + " << data[index];
 			
 		else if (data[index] != 0 && first == true)
 			cout << " + " << data[index] << "x^" << index;
@@ -91,6 +91,41 @@ Polynomial Polynomial::operator*(const Polynomial & target) const {
 
 	return newPoly;
 }
+
+Polynomial Polynomial::operator+(const Polynomial &target) const{
+	int smaller_size = 0;
+	
+	Polynomial result;
+	if (target.data_size>data_size){
+		//saves size of smaller as the number of overlappinng
+		smaller_size = (*this).data_size;
+		//saves larger of the two into result
+		result = target;
+	}else{
+		smaller_size = target.data_size;
+		result = (*this);
+	}
+
+	//rewrites overlapping data with sum of two, non-overlapping stays
+	for (int index = 0; index < smaller_size; index++){
+		result.data[index] = (*this).data[index] + target.data[index];
+	}
+	return result;
+}
+	
+Polynomial Polynomial::derivative(){
+	//multiplies every coefficient with power
+	Polynomial deri = (*this);
+	for (int  index = 0; index < deri.data_size; ++index){
+		deri.data[index] *= index;
+	}
+	//removes last term and shifts array
+	for (int  index = 0; index < deri.data_size-1; ++index){
+		deri.data[index] = deri.data[index+1];
+	}
+	data[data_size-1] = 0;
+	return deri;
+}
 int main()
 {
 	srand(time(0));
@@ -98,9 +133,14 @@ int main()
 	int B[3] = {1,1,1};
 	Polynomial test1(A,3);
 	Polynomial test2(B,3);
-	test1.print();
-	cout << (test1 == test2) << endl;;
+	//test1.print();
+	/*cout << (test1 == test2) << endl;;
 	cout << (test1 == test1) << endl;
-	(test1 * test2).print();
-	return EXIT_SUCCESS;
+	(test1 * test2).print();*/
+	Polynomial add = test1+test2;
+	add.print();
+	cout<<endl<<"der: ";
+	Polynomial deriv = add.derivative();
+	deriv.print();
+	cout << "hi";
 }
