@@ -1,7 +1,10 @@
-#pragma once
+
 
 #ifndef polynomial
 #define polynomial
+
+#include <string>
+using namespace std;
 
 class Polynomial
 {
@@ -14,6 +17,8 @@ class Polynomial
         Polynomial();
         Polynomial(string fileName);
         ~Polynomial();
+        int get_data_size();
         void print();
+        bool operator==(const Polynomial & target) const;
 };
 #endif

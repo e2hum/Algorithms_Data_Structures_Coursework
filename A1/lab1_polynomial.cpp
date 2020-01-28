@@ -7,6 +7,7 @@
 #include "polynomial.h"
 #include <fstream>
 
+
 using namespace std; //set std namespace
 
 
@@ -26,22 +27,8 @@ Polynomial::Polynomial(){
 	}
 }
 
-void Polynomial::print()
-{
-	for (int index = 0; index < data_size; index++)
-	{
-		if (index == 0)
-			cout << data[index] << "x^" << index;
-		else
-			cout << " + " << data[index] << "x^" << index;
-	}
-}
-
-Polynomial::~Polynomial(){
-	delete[]data;
-}
 Polynomial::Polynomial(string fileName){
-	ifstream fin(fileName);
+	ifstream fin(fileName.c_str());
 	int size = 0;
 	if (!fin.fail()){ //check for failure
 		fin>>size; //first variable is size
@@ -55,14 +42,44 @@ Polynomial::Polynomial(string fileName){
 	//my_ifstream.open(filename.c_str)
 }
 
-~Polynomial::Polynomial(){
+Polynomial::~Polynomial(){
 	delete[]data;
+}
+
+int Polynomial::get_data_size()
+{
+	return (*this).data_size;
+}
+
+void Polynomial::print()
+{
+	for (int index = 0; index < data_size; index++)
+	{
+		if (index == 0 && data[index] != 0)
+			cout << data[index] << "x^" << index;
+		else if (data[index] != 0)
+			cout << " + " << data[index] << "x^" << index;
+	}
+}
+
+bool Polynomial::operator==(const Polynomial & target) const
+{
+	for (int num = 0; num < (*this).data_size; num++)
+	{
+		if (data[num] != target.data[num])
+			return false;
+	}
+	return true;
 }
 
 int main()
 {
 	srand(time(0));
-	Polynomial test;
-	test.print();
+	Polynomial test1;
+	Polynomial test2;
+	Polynomial p = test1;
+	//test1.print();
+	cout << (test1 == test2);
+	cout << (test1 == test1);
 	return EXIT_SUCCESS;
 }
