@@ -1,3 +1,4 @@
+// Evan Hum and Jeremy Antonio Phy
 #include <iostream> //for console i/o
 #include <fstream> //for file i/o
 #include <cstdlib> //for everything
@@ -54,17 +55,20 @@ int Polynomial::get_data_size()
 void Polynomial::print() {
 	// skips all beginning zeros
 	bool first = false;
-	for (int index = data_size-1; index >= 0; index--) {
-		if (data[index] != 0 && first == false) {
-			cout << data[index] << "x^" << index;
-			first = true;
+	if (data_size == 0)
+		cout << 0;
+	else {
+		for (int index = data_size-1; index >= 0; index--) {
+			if (data[index] != 0 && first == false) {
+				cout << data[index] << "x^" << index;
+				first = true;
+			}
+			else if (index == 0 && data[index] !=0 && first == true)
+				cout << " + " << data[index];
+				
+			else if (data[index] != 0 && first == true)
+				cout << "  + " << data[index] << "x^" << index;
 		}
-		else if (index == 0 && data[index] !=0 && first == true)
-			cout << " + " << data[index];
-			
-		else if (data[index] != 0 && first == true)
-			cout << " + " << data[index] << "x^" << index;
-		
 	}
 	cout << endl;
 }
@@ -79,68 +83,220 @@ bool Polynomial::operator==(const Polynomial & target) const {
 }
 
 Polynomial Polynomial::operator*(const Polynomial & target) const {
-	int size = ((*this).data_size - 1) * (target.data_size - 1) + 1;
+	int size = ((*this).data_size - 1) + (target.data_size - 1) + 1;
 	int A[size] = {0};
 	Polynomial newPoly(A, size);
 	for (int index = 0; index < (*this).data_size; index++) {
 		for (int num = 0; num < target.data_size; num++) {
 			newPoly.data[index + num] += (*this).data[index] * target.data[num];
 		}
-		newPoly.print();
 	}
 
 	return newPoly;
 }
 
 Polynomial Polynomial::operator+(const Polynomial &target) const{
-	int smaller_size = 0;
-	
-	Polynomial result;
+	int smaller_size = 0, larger_size = 0;
 	if (target.data_size>data_size){
-		//saves size of smaller as the number of overlappinng
+		//saves size of smaller as the number of overlapping
 		smaller_size = (*this).data_size;
-		//saves larger of the two into result
-		result = target;
-	}else{
-		smaller_size = target.data_size;
-		result = (*this);
+		larger_size = target.data_size;
 	}
-
+	else {
+		smaller_size = target.data_size;
+		larger_size = (*this).data_size;
+	}
+	int A[larger_size] = {0};
+	Polynomial result(A, larger_size);
 	//rewrites overlapping data with sum of two, non-overlapping stays
 	for (int index = 0; index < smaller_size; index++){
 		result.data[index] = (*this).data[index] + target.data[index];
 	}
 	return result;
 }
-	
-Polynomial Polynomial::derivative(){
+Polynomial Polynomial::operator-(const Polynomial &target) const{
+	int smaller_size = 0, larger_size = 0;
+	if (target.data_size>data_size){
+		//saves size of smaller as the number of overlapping
+		smaller_size = (*this).data_size;
+		larger_size = target.data_size;
+	}
+	else {
+		smaller_size = target.data_size;
+		larger_size = (*this).data_size;
+	}
+	int A[larger_size] = {0};
+	Polynomial result(A, larger_size);
+	//rewrites overlapping data with sum of two, non-overlapping stays
+	for (int index = 0; index < smaller_size; index++){
+		result.data[index] = (*this).data[index] - target.data[index];
+	}
+	return result;
+}
+
+Polynomial Polynomial::derivative() {
 	//multiplies every coefficient with power
-	Polynomial deri = (*this);
-	for (int  index = 0; index < deri.data_size; ++index){
-		deri.data[index] *= index;
+	int A[(*this).data_size] = {0};
+	Polynomial deriv(A, (*this).data_size);
+	for (int  index = 0; index < deriv.data_size; index++){
+		deriv.data[index] = (*this).data[index];
+		deriv.data[index] *= index;
 	}
 	//removes last term and shifts array
-	for (int  index = 0; index < deri.data_size-1; ++index){
-		deri.data[index] = deri.data[index+1];
+	for (int  index = 0; index < deriv.data_size-1; index++){
+		deriv.data[index] = deriv.data[index+1];
 	}
-	data[data_size-1] = 0;
-	return deri;
+	deriv.data[deriv.data_size-1] = 0;
+	return deriv;
+}
+// Tests array constructor
+bool PolynomialTest::test_constructors1() {
+	int A[3] = {3,1,2};
+	Polynomial test1(A,3);
+	bool same = true;
+	for (int index = 0; index < test1.get_data_size(); index++) {
+		if (test1.data[index] != A[index])
+			same = false;
+	}
+}
+// Tests empty polynomial
+bool PolynomialTest::test_constructors2() {
+	int A[0];
+	Polynomial test1(A,0);
+	if (test1.get_data_size() == 0)
+		return true;
+	else 
+		return false;
+}
+// Tests == operator
+bool PolynomialTest::test_operator_equals() {
+	int A[3] = {-2,3,1};
+	int B[4] = {-1,-2,-3,-4};
+	Polynomial test1(A,3);
+	Polynomial test2(B,4);
+	if (test1 == test1 && !(test1 == test2))
+		return true;
+	else
+		return false;
+}
+// Tests randomly generated polynomials
+bool PolynomialTest::test_constructors3() {
+	Polynomial test1;
+	Polynomial test2;
+	for (int index = 0; index < test1.get_data_size(); index++)
+	{
+		if (test1.data[index] < -1000 || test1.data[index] > 1000 || test1.get_data_size() > 1000)
+			return false;
+	}
+}
+// Tests sample file polynomial
+bool PolynomialTest::test_constructors4() {
+	Polynomial test1("polynomialSample.txt");
+	// Recreating the same polynomial to compare
+	int A[5] = {-1, 3, 15, 7, 0};
+	Polynomial test2(A, 5);
+	if (test1 == test2)
+		return true;
+	else
+		return false;
+}
+
+bool PolynomialTest::test_operator_addition() {
+	int A[3] = {1,2,3};
+	int B[3] = {2,4,6};
+	Polynomial test1(A, 3);
+	Polynomial test2(B, 3);
+	if ((test1 + test1) == test2)
+		return true;
+	else
+		return false;
+}
+
+bool PolynomialTest::test_operator_subtraction() {
+	int A[3] = {1,2,3};
+	int B[3] = {2,4,6};
+	Polynomial test1(A, 3);
+	Polynomial test2(B, 3);
+	if ((test2 - test1) == test1)
+		return true;
+	else
+		return false;
+}
+bool PolynomialTest::test_operator_multiply() {
+	int A[4] = {1,0,0,2};
+	int B[5] = {0,0,2,0,1};
+	int C[8] = {0,0,2,0,1,4,0,2};
+	Polynomial test1(A,4);
+	Polynomial test2(B,5);
+	Polynomial test3(C,8);
+	if ((test1 * test2) == test3)
+		return true;
+	else
+		return false;
+}
+bool PolynomialTest::test_derivative() {
+	int A[3] = {2,3,1};
+	int B[3] = {3,2};
+	Polynomial test1(A,3);
+	Polynomial test2(B,3);
+	if (test1.derivative() == test2)
+		return true;
+	else 
+		return false;
+}
+
+void PolynomialTest::run()
+{
+	cout << "-----TEST CASES-----" << endl << endl;
+	if (test_constructors1())
+		cout << "Array Polynomial Constructor Passed." << endl;
+	else
+		cout << "Array Polynomial Constructor Failed." << endl;
+		
+	if (test_constructors2())
+		cout << "Empty Polynomial Creation Passed." << endl;
+	else
+		cout << "Empty Polynoomial Creation Failed." << endl;
+		
+	if (test_constructors3())
+		cout << "Random Polynomial Constructor Passed." << endl;
+	else
+		cout << "Random Polynomial Constructor Failed." << endl;
+	
+	if (test_operator_equals())
+		cout << "Equality Operator Passed." << endl;
+	else 
+		cout << "Equallity Operator Failed." << endl;
+		
+	if (test_constructors4())
+		cout << "Separate File Polynomial Constructor Passed." << endl;
+	else
+		cout << "Separate File Polynomial Constructor Failed." << endl;
+		
+	if (test_operator_addition())
+		cout << "Addition Operator Passed." << endl;
+	else
+		cout << "Addition Operator Failed." << endl;
+		
+	if (test_operator_subtraction())
+		cout << "Subtraction Operator Passed." << endl;
+	else
+		cout << "Subtraction Operator Failed." << endl;
+		
+	if (test_operator_multiply())
+		cout << "Multiplication Operator Passed." << endl;
+	else
+		cout << "Multiplation Operator Failed." << endl;
+		
+	if (test_derivative())
+		cout << "Derivative Function Passed." << endl;
+	else
+		cout << "Derivative Function Failed." << endl;
+		
 }
 int main()
 {
 	srand(time(0));
-	int A[4] = {1,1,1};
-	int B[3] = {1,1,1};
-	Polynomial test1(A,3);
-	Polynomial test2(B,3);
-	//test1.print();
-	/*cout << (test1 == test2) << endl;;
-	cout << (test1 == test1) << endl;
-	(test1 * test2).print();*/
-	Polynomial add = test1+test2;
-	add.print();
-	cout<<endl<<"der: ";
-	Polynomial deriv = add.derivative();
-	deriv.print();
-	cout << "hi";
+	PolynomialTest myTest;
+	myTest.run();
 }
