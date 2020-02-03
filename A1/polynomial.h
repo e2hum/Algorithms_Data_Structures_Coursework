@@ -1,5 +1,3 @@
-
-
 // Evan Hum and Jeremy Antonio Phy
 #ifndef polynomial
 

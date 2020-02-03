@@ -7,7 +7,7 @@
 #include <ctime>
 #include "polynomial.h"
 #include <fstream>
-
+#include <typeinfo> //check data type
 
 using namespace std; //set std namespace
 
@@ -30,17 +30,26 @@ Polynomial::Polynomial(){
 
 Polynomial::Polynomial(string fileName){
 	ifstream fin(fileName.c_str());
-	int size = 0;
+	int size = 0, value = 0;
 	if (!fin.fail()){ //check for failure
 		fin>>size; //first variable is size
 		data = new int [size];
 		data_size = size;
-		for(int index = 0; index < size; index++){
-			fin>>data[index];
+		for(int index = 0; index < size; index++) {
+		// error check in case inputted size is larger than number of values
+			if (fin >> value) {
+				data[index] = value;
+			}
+			else{
+				data[index] = 0;
+			}
 		}
-		fin.close();
+		
 	}
-	//my_ifstream.open(filename.c_str)
+	else{
+		cout << "Failed to open file." << endl;
+	}
+	fin.close();
 }
 
 Polynomial::~Polynomial(){
@@ -183,8 +192,7 @@ bool PolynomialTest::test_operator_equals() {
 bool PolynomialTest::test_constructors3() {
 	Polynomial test1;
 	Polynomial test2;
-	for (int index = 0; index < test1.get_data_size(); index++)
-	{
+	for (int index = 0; index < test1.get_data_size(); index++) {
 		if (test1.data[index] < -1000 || test1.data[index] > 1000 || test1.get_data_size() > 1000)
 			return false;
 	}
@@ -300,3 +308,23 @@ int main()
 	PolynomialTest myTest;
 	myTest.run();
 }
+
+/* OUTPUT
+-----TEST CASES-----
+
+Array Polynomial Constructor Passed.
+Empty Polynomial Creation Passed.
+Random Polynomial Constructor Passed.
+Equality Operator Passed.
+Separate File Polynomial Constructor Failed.
+Addition Operator Passed.
+Subtraction Operator Passed.
+Multiplication Operator Passed.
+Derivative Function Passed.
+
+--------------------------------
+Process exited after 0.09141 seconds with return value 0
+Press any key to continue . . .
+*/
+
+
