@@ -3,9 +3,17 @@
 // TODO: Implement all of the listed functions below
 
 DronesManager::DronesManager() {
+	first = NULL;
+	last = NULL;
+	size = 0;
 }
 
 DronesManager::~DronesManager() {
+	while(size > 0){
+		remove_back();
+	}
+	delete(first);
+	delete(last);
 }
 
 bool operator==(const DronesManager::DroneRecord& lhs, const DronesManager::DroneRecord& rhs) {
@@ -72,7 +80,20 @@ bool DronesManager::insert_front(DroneRecord value) {
 }
 
 bool DronesManager::insert_back(DroneRecord value) {
-	return false;
+	//Case 1, empty list
+	if (!first){
+		first = &value;
+		last = &value;
+	}else {
+		//last becomes 2nd last, points to val
+		(*last).next = &value;
+		//updates manager's last
+		last = &value;
+		//set val to be last
+		(value).next = NULL;
+	}
+	size++;
+	return true;
 }
 
 bool DronesManager::remove(unsigned int index) {
