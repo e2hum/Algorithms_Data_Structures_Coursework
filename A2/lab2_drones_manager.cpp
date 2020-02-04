@@ -9,26 +9,58 @@ DronesManager::~DronesManager() {
 }
 
 bool operator==(const DronesManager::DroneRecord& lhs, const DronesManager::DroneRecord& rhs) {
-	return false;
+	bool equal = (lhs.droneID == rhs.droneID);
+	equal = (equal && (lhs.range == rhs.range));
+	equal = (equal && (lhs.yearBought == rhs.yearBought));
+	equal = (equal && (lhs.droneType == rhs.droneType));
+	equal = (equal && (lhs.manufacturer == rhs.manufacturer));
+	equal = (equal && (lhs.description == rhs.description));
+	equal = (equal && (lhs.batteryType == rhs.batteryType));
+	return equal;
 }
 
 unsigned int DronesManager::get_size() const {
-	return 0;
+	return size;
 }
 
 bool DronesManager::empty() const {
-	return false;
+		if (size == 0)
+		return true;
+	else
+		return false;
 }
 
 DronesManager::DroneRecord DronesManager::select(unsigned int index) const {
-	return DroneRecord();
+	DroneRecord* value = first;
+	if (index > size) {
+		return *last;
+	}
+	else if (size == 0)
+		return DroneRecord(0);
+	else {
+		for (int count = 0; count < index; count++) {
+			value->next = value->next->next;
+		}
+		return *value;
+	}
 }
 
 unsigned int DronesManager::search(DroneRecord value) const {
-	return 0;
+	DroneRecord* position = first;
+	if (size == 0)
+		return 0;
+	else {
+		for (int index = 0; index < size; index++) {
+			if (position == value)
+		}
+	}
 }
 
 void DronesManager::print() const {
+	for (int index = 0; index < size; index++) {
+		cout << first->droneID << endl;
+		first = first->get_next();
+	}
 }
 
 bool DronesManager::insert(DroneRecord value, unsigned int index) {
