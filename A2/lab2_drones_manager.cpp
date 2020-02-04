@@ -3,9 +3,17 @@
 // TODO: Implement all of the listed functions below
 
 DronesManager::DronesManager() {
+	first = NULL;
+	last = NULL;
+	size = 0;
 }
 
 DronesManager::~DronesManager() {
+	while(size > 0){
+		pop_back();
+	}
+	delete(first);
+	delete(last);
 }
 
 bool operator==(const DronesManager::DroneRecord& lhs, const DronesManager::DroneRecord& rhs) {
