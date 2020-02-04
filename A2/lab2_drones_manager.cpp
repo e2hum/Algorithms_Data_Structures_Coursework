@@ -10,7 +10,7 @@ DronesManager::DronesManager() {
 
 DronesManager::~DronesManager() {
 	while(size > 0){
-		pop_back();
+		remove_back();
 	}
 	delete(first);
 	delete(last);
@@ -48,7 +48,20 @@ bool DronesManager::insert_front(DroneRecord value) {
 }
 
 bool DronesManager::insert_back(DroneRecord value) {
-	return false;
+	//Case 1, empty list
+	if (!first){
+		first = &value;
+		last = &value;
+	}else {
+		//last becomes 2nd last, points to val
+		(*last).next = &value;
+		//updates manager's last
+		last = &value;
+		//set val to be last
+		(value).next = NULL;
+	}
+	size++;
+	return true;
 }
 
 bool DronesManager::remove(unsigned int index) {
