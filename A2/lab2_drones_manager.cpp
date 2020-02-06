@@ -76,7 +76,23 @@ bool DronesManager::insert(DroneRecord value, unsigned int index) {
 }
 
 bool DronesManager::insert_front(DroneRecord value) {
-	return false;
+	//case 1, empty
+	if(!first){
+		first = &value;
+		last = &value;
+	}
+	//general case, nonempty
+	else {
+		//updates value's pointers
+		value->prev = NULL;
+		value->next = first;
+		//update first
+		first->prev = value;
+		//updates manager's pointer
+		first = value;
+	}
+	size++;
+	return true;
 }
 
 bool DronesManager::insert_back(DroneRecord value) {
@@ -84,13 +100,16 @@ bool DronesManager::insert_back(DroneRecord value) {
 	if (!first){
 		first = &value;
 		last = &value;
-	}else {
-		//last becomes 2nd last, points to val
-		(*last).next = &value;
-		//updates manager's last
+	}
+	//general case, nonempty
+	else {
+		//updates value's pinters
+		value->prev = last;
+		value->next = NULL;
+		//update last
+		last->next = &value;
+		//updates manager's pointer
 		last = &value;
-		//set val to be last
-		(value).next = NULL;
 	}
 	size++;
 	return true;
