@@ -1,5 +1,4 @@
 #include "lab2_drones_manager.hpp"
-
 // TODO: Implement all of the listed functions below
 
 DronesManager::DronesManager() {
@@ -59,15 +58,19 @@ unsigned int DronesManager::search(DroneRecord value) const {
 		return 0;
 	else {
 		for (int index = 0; index < size; index++) {
-			if (position == value)
+			if (*position == value)
+				return index;
+			else
+				return size;
 		}
 	}
 }
 
 void DronesManager::print() const {
+	DroneRecord* printer = first;
 	for (int index = 0; index < size; index++) {
 		cout << first->droneID << endl;
-		first = first->get_next();
+		printer = printer->next;
 	}
 }
 
