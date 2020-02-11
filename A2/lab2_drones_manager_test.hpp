@@ -42,7 +42,19 @@ public:
 	
 	// PURPOSE: select() and search() work properly
 	bool test3() {
-	    return false;
+		DronesManager manager1, manager2;
+		manager1.insert_front(DronesManager::DroneRecord(100));
+		manager2.insert_back(DronesManager::DroneRecord(100));		
+		ASSERT_TRUE(manager1.select(0) == manager2.select(0) && manager1.select(0) == DronesManager::DroneRecord(100))
+		cout << "IM WORKING" << endl;
+		ASSERT_TRUE(manager1.search(100) == manager2.search(100))
+		cout << "IM WOrKING TOOOO" << endl;
+		manager1.insert_front(DronesManager::DroneRecord(150));
+		cout << manager1.search(150) << endl;
+		cout << manager1.search(100);
+		ASSERT_TRUE(manager1.search(100) == 1)
+		cout << "YAY I WORK";
+		return true;	
 	}
 	
 	// PURPOSE: remove_front() and remove_back() on one-element list
