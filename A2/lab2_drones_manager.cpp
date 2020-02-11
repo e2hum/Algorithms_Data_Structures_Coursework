@@ -39,17 +39,23 @@ bool DronesManager::empty() const {
 
 DronesManager::DroneRecord DronesManager::select(unsigned int index) const {
 	DroneRecord* value = first;
-	if (index > size) {
+	return *value;
+	/*cout<<"DroneID: "<<value->droneID;
+	//case 1; empty
+	if (!value){
+		return DroneRecord(0);
+	}
+	//case 2; index too big
+	else if (index > size) {
 		return *last;
 	}
-	else if (size == 0)
-		return DroneRecord(0);
+	//general case
 	else {
 		for (int count = 0; count < index; count++) {
-			value->next = value->next->next;
+			value = value->next;	
 		}
 		return *value;
-	}
+	}*/
 }
 
 unsigned int DronesManager::search(DroneRecord value) const {
@@ -81,18 +87,21 @@ bool DronesManager::insert(DroneRecord value, unsigned int index) {
 bool DronesManager::insert_front(DroneRecord value) {
 	//case 1, empty
 	if(!first){
-		first = &value;
-		last = &value;
+		//DONE DO THIS first = &value; SAVING POINTER (heap) TO STACK 
+		//INSTEAD
+		first = new DroneRecord(value);
+		last = first;
 	}
 	//general case, nonempty
 	else {
 		//updates value's pointers
-		value->prev = NULL;
-		value->next = first;
-		//update first
-		first->prev = value;
+		DroneRecord *temp = new DroneRecord(value);
+		temp->prev = NULL;
+		temp->next = first;
+		//update first to be second
+		first->prev = temp;
 		//updates manager's pointer
-		first = value;
+		first = temp;
 	}
 	size++;
 	return true;
@@ -101,18 +110,19 @@ bool DronesManager::insert_front(DroneRecord value) {
 bool DronesManager::insert_back(DroneRecord value) {
 	//Case 1, empty list
 	if (!first){
-		first = &value;
-		last = &value;
+		first = new DroneRecord(value);
+		last = first;
 	}
 	//general case, nonempty
 	else {
 		//updates value's pinters
-		value->prev = last;
-		value->next = NULL;
+		DroneRecord *temp = new DroneRecord(value);
+		temp->prev = last;
+		temp->next = NULL;
 		//update last
-		last->next = &value;
+		last->next = temp;
 		//updates manager's pointer
-		last = &value;
+		last = temp;
 	}
 	size++;
 	return true;

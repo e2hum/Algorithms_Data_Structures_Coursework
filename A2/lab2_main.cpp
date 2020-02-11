@@ -10,6 +10,7 @@ string get_status_str(bool status) {
 }
 
 int main() {
+	
     DronesManagerTest drones_manager_test;
 
 	string test_descriptions[12] = {
@@ -24,11 +25,16 @@ int main() {
       "Test9: lots of inserts and deletes, some of them invalid",
       "Test10: lots of inserts, reverse the list, and then lots of removes until empty"
 	};
-	
+	cout<<"yes";
 	bool test_results[10];
     test_results[0] = drones_manager_test.test1();
-    test_results[1] = drones_manager_test.test2();
+    cout<<"wack";
+    cout<<test_results[0];
+    cout << (drones_manager_test.test2());
+	test_results[1] = drones_manager_test.test2();
+    cout<<"hellllo";
     test_results[2] = drones_manager_test.test3();
+    
     test_results[3] = drones_manager_test.test4();
     test_results[4] = drones_manager_test.test5();
     test_results[5] = drones_manager_test.test6();

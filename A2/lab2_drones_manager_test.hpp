@@ -1,7 +1,7 @@
 #ifndef DRONES_MANAGER_TEST
 #define DRONES_MANAGER_TEST
 
-#include "lab2_drones_manager.hpp"
+#include "lab2_drones_manager.cpp"
 
 #define ASSERT_TRUE(T) if (!(T)) return false;
 #define ASSERT_FALSE(T) if ((T)) return false;
@@ -19,18 +19,23 @@ public:
 	}
 	
 	// PURPOSE: insert_front() and insert_back() on zero-element list
-	bool test2() {
+	int test2() {
 		DronesManager manager1, manager2;
+		cout<<"part 1";
 		manager1.insert_front(DronesManager::DroneRecord(100));
 		manager2.insert_back(DronesManager::DroneRecord(100));
-	    
+		cout<<"part 2";
 		ASSERT_TRUE(manager1.get_size() == manager2.get_size() && manager1.get_size() == 1)
+		cout<<"part 3";
 		ASSERT_TRUE(manager1.first != NULL && manager1.first == manager1.last)
 		ASSERT_TRUE(manager2.first != NULL && manager2.first == manager2.last)
+		cout<<"part 4";
 		ASSERT_TRUE(manager1.first->prev == NULL && manager1.last->next == NULL)
 		ASSERT_TRUE(manager2.first->prev == NULL && manager2.last->next == NULL)
-		ASSERT_TRUE(manager1.select(0) == manager2.select(0) && manager1.select(0) == DronesManager::DroneRecord(100))		
-	    return true;
+		cout<<"part 5";
+		ASSERT_TRUE(manager1.select(0) == manager2.select(0) && manager1.select(0) == DronesManager::DroneRecord(100))	
+		cout<<"part 6";
+	    return 1;
 	}
 	
 	// TODO: Implement all of the test cases below
