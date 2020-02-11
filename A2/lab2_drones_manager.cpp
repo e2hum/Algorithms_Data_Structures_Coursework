@@ -73,10 +73,17 @@ unsigned int DronesManager::search(DroneRecord value) const {
 }
 
 void DronesManager::print() const {
-	DroneRecord* printer = first;
-	for (int index = 0; index < size; index++) {
-		cout << first->droneID << endl;
-		printer = printer->next;
+	if (size == 0){
+		cout<<"Empty";
+		return;
+	}else{
+		DroneRecord* it = first;
+		int count = 1;
+		while (it&&it->next){
+			cout<<"Drone #: "<<count<<" DroneID: " <<it->droneID<<endl;
+			it= it->next;
+			count++;
+		}
 	}
 }
 
