@@ -35,7 +35,7 @@ public:
 		cout<<"part 5";
 		ASSERT_TRUE(manager1.select(0) == manager2.select(0) && manager1.select(0) == DronesManager::DroneRecord(100))	
 		cout<<"part 6";
-	    return 1;
+	    return true;
 	}
 	
 	// TODO: Implement all of the test cases below

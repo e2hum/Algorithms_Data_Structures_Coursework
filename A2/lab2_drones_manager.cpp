@@ -11,8 +11,7 @@ DronesManager::~DronesManager() {
 	while(size > 0){
 		remove_back();
 	}
-	delete(first);
-	delete(last);
+	first = last = NULL;
 }
 
 bool operator==(const DronesManager::DroneRecord& lhs, const DronesManager::DroneRecord& rhs) {
@@ -137,7 +136,24 @@ bool DronesManager::remove_front() {
 }
 
 bool DronesManager::remove_back() {
-	return false;
+	//empty
+	if(!first){
+		return false;
+	}
+	//single element
+	else if(!first->next){
+		delete first;
+		first = NULL;
+		last = NULL;
+	}
+	//general case
+	else{
+		DroneRecord *temp = last->prev;
+		delete last;
+		last = temp;
+	}
+	--size;
+	return true;
 }
 
 bool DronesManager::replace(unsigned int index, DroneRecord value) {
