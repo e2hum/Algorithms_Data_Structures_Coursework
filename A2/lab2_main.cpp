@@ -30,11 +30,10 @@ int main() {
     test_results[0] = drones_manager_test.test1();
     cout<<"wack";
     cout<<test_results[0];
-    cout << (drones_manager_test.test2());
-	test_results[1] = drones_manager_test.test2();
+    //cout << (drones_manager_test.test2());
+	//test_results[1] = drones_manager_test.test2();
     cout<<"hellllo";
     test_results[2] = drones_manager_test.test3();
-    
     test_results[3] = drones_manager_test.test4();
     test_results[4] = drones_manager_test.test5();
     test_results[5] = drones_manager_test.test6();
