@@ -87,20 +87,42 @@ public:
 	
 	// PURPOSE: replace() and reverse_list() work properly
 	bool test5() {
-	    DronesManager manager1;
+	    DronesManager manager1, manager2;
+	    // checks if index is out of range, replace returns false
+	    ASSERT_FALSE(manager1.replace(3, DronesManager::DroneRecord(123)))
+	    // checks if the manager is empty, reverse returns false
+	    ASSERT_FALSE(manager1.reverse_list())
 	    manager1.insert_front(DronesManager::DroneRecord(100));
+	    // checks if the manager has one DroneRecord, reverse returns false
+	    ASSERT_FALSE(manager1.reverse_list())
 		manager1.insert_front(DronesManager::DroneRecord(200));
 		manager1.insert_front(DronesManager::DroneRecord(300));
 		manager1.insert_front(DronesManager::DroneRecord(400));
 		manager1.replace(2, DronesManager::DroneRecord(600));
-		ASSERT_TRUE(manager1.search(600) == 2)
-		//manager1.print();
+		// checks if the index of the new value matches the index parameter and that the size is still the same
+		ASSERT_TRUE(manager1.search(600) == 2 && manager1.size == 4)
+		// compares reversed manager1 to manager2 which represents expected result
+		manager1.reverse_list();
+		manager2.insert_back(DronesManager::DroneRecord(100));
+		manager2.insert_back(DronesManager::DroneRecord(600));
+		manager2.insert_back(DronesManager::DroneRecord(300));
+		manager2.insert_back(DronesManager::DroneRecord(400));
+		for (int num = 0; num < manager1.size; num++) {
+			ASSERT_TRUE(manager1.select(num) == manager2.select(num))
+		}
 		return true;
 	}
 	
 	// PURPOSE: insert_front() keeps moving elements forward
 	bool test6() {
-	    return false;
+	    DronesManager manager1;
+	    manager1.insert_front(DronesManager::DroneRecord(100));
+	    ASSERT_TRUE(manager1.search(DronesManager::DroneRecord(100)) == 0)
+	    manager1.insert_front(DronesManager::DroneRecord(200));
+	    ASSERT_TRUE(manager1.search(DronesManager::DroneRecord(100)) == 1)
+	    manager1.insert_front(DronesManager::DroneRecord(300));
+	    ASSERT_TRUE(manager1.search(DronesManager::DroneRecord(100)) == 2)
+	    return true;
 	}
 	
 	// PURPOSE: inserting at different positions in the list
@@ -120,24 +142,55 @@ public:
 	
 	// PURPOSE: try to remove too many elements, then add a few elements
 	bool test8() {
-	    return false;
+	    DronesManager manager1;
+	    manager1.insert_front(DronesManager::DroneRecord(100));
+		manager1.remove_front();
+		// returns false when there is nothing left to remove
+		ASSERT_FALSE(manager1.remove_front())
+		// returns true when new elements are added
+		ASSERT_TRUE(manager1.insert_front(DronesManager::DroneRecord(100)))
+		ASSERT_TRUE(manager1.insert_front(DronesManager::DroneRecord(200)))	
+		ASSERT_TRUE(manager1.insert_front(DronesManager::DroneRecord(300)))
+		return true;
 	}
 	
 	// PURPOSE: lots of inserts and deletes, some of them invalid
 	bool test9() {
-		return false;
+		DronesManager manager1;
+		manager1.insert_front(DronesManager::DroneRecord(100));
+		manager1.insert_back(DronesManager::DroneRecord(200));
+		manager1.insert_back(DronesManager::DroneRecord(300));
+		manager1.insert_front(DronesManager::DroneRecord(400));
+		manager1.insert(DronesManager::DroneRecord(500), 2);
+		manager1.insert(DronesManager::DroneRecord(600), 10);
+		manager1.remove(3);
+		manager1.remove_front();
+		manager1.remove_back();
+		manager1.remove(9);
+		// checks that the manager only has the DroneRecords 100 and 500 left
+		ASSERT_TRUE(manager1.size == 2 && manager1.search(100) == 0 && manager1.search(500) == 1)
+		return true;
 	}    
 	    	
 	// PURPOSE: lots of inserts, reverse the list, and then lots of removes until empty
 	bool test10() {
-		DronesManager m1;
+		DronesManager m1, m2;
+		// adds lots of elements to the manager
 		for(int x = 0; x<10; x++)
 			m1.insert_back(DronesManager::DroneRecord(x+1));
-	   	//cout<<"forward"<<endl;
-	   	//m1.print();
+		ASSERT_TRUE(m1.size == 10)
+		// reverses the list
 	   	m1.reverse_list();
-		//cout<<"backwards"<<endl;
-		//m1.print();
+	   	// makes a second manager that is the expected reverse of m1
+		for(int x = 0; x<10; x++)
+			m2.insert_front(DronesManager::DroneRecord(x+1));
+		for (int num = 0; num < m1.size; num++) {
+			ASSERT_TRUE(m1.select(num) == m2.select(num))
+		}
+		for(int x = 0; x<10; x++)
+			m1.remove_front();
+		// checks if all elements were deleted
+		ASSERT_TRUE(m1.size == 0)
 		return true;
 	} 
 };
