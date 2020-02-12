@@ -89,7 +89,7 @@ void DronesManager::print() const {
 
 bool DronesManager::insert(DroneRecord value, unsigned int index) {
 	// if index is out of range, return false
-	if (index >= size) {
+	if (index >= size || index < 0) {
 		cout << "Index out of range."  << endl;
 		return false;
 	}
@@ -160,7 +160,25 @@ bool DronesManager::insert_back(DroneRecord value) {
 }
 
 bool DronesManager::remove(unsigned int index) {
-	return false;
+	//empty list
+	if (!first)
+		return false;
+	//invalid index
+	else if (index>size-1 || index < 0){
+		return false
+	}
+	//general case
+	else{
+		DroneRecord * itera = first;
+		for(int x = 0; x < index; x++){
+			itera = itera->next;
+		}
+		itera->prev->next = itera->next;
+		itera->next->prev = itera-prev;
+		delete itera;
+		itera = NULL;
+	}
+	return true;
 }
 
 bool DronesManager::remove_front() {
@@ -211,6 +229,24 @@ bool DronesManager::replace(unsigned int index, DroneRecord value) {
 }
 
 bool DronesManager::reverse_list() {
-	return false;
+	//case 1 empty and single element
+	//NOTE IF NO CHANGE OCCURS; RETURNS FALSE
+	if(!first->next){
+		return false;
+	}
+	//general case
+	else{
+		DroneRecord *curr = first;
+		DroneRecord *pre = NULL;
+		DroneRecord *nex = NULL;
+		while(curr){
+			nex = curr->next;
+			cur->next = prev;
+			cur->prev = next;
+			pre = curr;
+			curr = next;
+		}
+	}
+	return true;
 }
 
