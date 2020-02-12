@@ -37,18 +37,19 @@ public:
 	// PURPOSE: select() and search() work properly
 	bool test3() {
 		DronesManager manager1, manager2;
+		// checks if when the manager is empty, returns DroneRecord(0)
+		ASSERT_TRUE(manager1.select(0) == DronesManager::DroneRecord(0))
+		// checks if when the manager is empty, search returns 0
+		ASSERT_TRUE(manager1.search(100) == 0)
 		manager1.insert_front(DronesManager::DroneRecord(100));
-		manager2.insert_back(DronesManager::DroneRecord(100));		
+		manager2.insert_back(DronesManager::DroneRecord(100));	
+		// checks if the first DroneRecord in each manager is the same, then checks the DroneRecord value	
 		ASSERT_TRUE(manager1.select(0) == manager2.select(0) && manager1.select(0) == DronesManager::DroneRecord(100))
+		// checks if the first DroneRecord in each manager have to same index
 		ASSERT_TRUE(manager1.search(100) == manager2.search(100))
-		manager1.insert_back(DronesManager::DroneRecord(150));
-		cout << manager1.search(150) << endl;
-		cout << manager1.search(100);
-		cout << endl << endl;
-		manager1.print();
-		cout << endl << endl;
-		ASSERT_TRUE(manager1.search(100) == 1)
-		cout << "YAY I WORK";
+		manager1.insert_front(DronesManager::DroneRecord(150));
+		// checks if search returns size when value is not found
+		ASSERT_TRUE(manager1.search(200) == manager1.size)
 		return true;	
 	}
 	

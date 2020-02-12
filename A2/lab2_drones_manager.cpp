@@ -38,7 +38,7 @@ bool DronesManager::empty() const {
 
 DronesManager::DroneRecord DronesManager::select(unsigned int index) const {
 	DroneRecord* value = first;
-	cout<<"DroneID: "<<value->droneID;
+	//cout<<"DroneID: "<<value->droneID;
 	//case 1; empty
 	if (!value){
 		return DroneRecord(0);
@@ -62,7 +62,7 @@ unsigned int DronesManager::search(DroneRecord value) const {
 	if (size == 0)
 		return 0;
 	else {
-		while(position->next) {
+		while(position) {
 			if (position->droneID == value.droneID)
 				return index;
 		position = position->next;
@@ -79,9 +79,9 @@ void DronesManager::print() const {
 	}else{
 		DroneRecord* it = first;
 		int count = 1;
-		while (it&&it->next){
+		while (it){
 			cout<<"Drone #: "<<count<<" DroneID: " <<it->droneID<<endl;
-			it= it->next;
+			it = it->next;
 			count++;
 		}
 	}
