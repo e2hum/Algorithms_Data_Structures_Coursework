@@ -140,7 +140,25 @@ bool DronesManager::remove(unsigned int index) {
 }
 
 bool DronesManager::remove_front() {
-	return false;
+	//case 1 empty
+	if(!first){
+		return false;
+	}
+	//case 2 single element
+	else if (size == 1){
+		delete first;
+		first = last = NULL;
+	}
+	//general case 
+	else{
+		//stores second 
+		DroneRecord* temp = first->next;
+		temp->prev = NULL;
+		delete first;
+		first = temp;
+	}
+	--size;
+	return true;
 }
 
 bool DronesManager::remove_back() {
@@ -151,14 +169,14 @@ bool DronesManager::remove_back() {
 	//single element
 	else if(!first->next){
 		delete first;
-		first = NULL;
-		last = NULL;
+		first = last = NULL;
 	}
 	//general case
 	else{
-		DroneRecord *temp = last->prev;
+		DroneRecord *secondLast = last->prev;
 		delete last;
-		last = temp;
+		last = secondLast;
+		last->next = NULL;
 	}
 	--size;
 	return true;

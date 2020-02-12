@@ -55,7 +55,18 @@ public:
 	
 	// PURPOSE: remove_front() and remove_back() on one-element list
 	bool test4() {
-	    return false;
+		DronesManager m1, m2;
+		m1.insert_front(DronesManager::DroneRecord(2));
+		m1.insert_front(DronesManager::DroneRecord(1));
+		//1, 2
+		m1.remove_back();
+		m1.print();
+		
+		m2.insert_front(DronesManager::DroneRecord(1));
+		m2.print();
+		cout<<endl;
+		ASSERT_TRUE(m1.select(0) == m2.select(0));
+	    return true;
 	}
 	
 	// PURPOSE: replace() and reverse_list() work properly
