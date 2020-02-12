@@ -88,7 +88,31 @@ void DronesManager::print() const {
 }
 
 bool DronesManager::insert(DroneRecord value, unsigned int index) {
-	return false;
+	// if index is out of range, return false
+	if (index >= size) {
+		cout << "Index out of range."  << endl;
+		return false;
+	}
+	// if index is first position, use insert_front
+	else if (index == 0)
+		insert_front(value);
+	// if index is last position, use insert_back
+	else if (index == size-1)
+		insert_back(value);
+	// general case
+	else {
+		DroneRecord* temp = new DroneRecord(value);
+		DroneRecord* it = first;
+		for (int position = 0; position < index; position++) {
+			it = it->next;
+		}
+		DroneRecord* before = it->prev;
+		it->prev = temp;
+		temp->next = it;
+		before->next = temp;
+		temp->prev = before;
+	}
+	return true;
 }
 
 bool DronesManager::insert_front(DroneRecord value) {

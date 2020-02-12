@@ -40,16 +40,16 @@ public:
 		// checks if when the manager is empty, returns DroneRecord(0)
 		ASSERT_TRUE(manager1.select(0) == DronesManager::DroneRecord(0))
 		// checks if when the manager is empty, search returns 0
-		ASSERT_TRUE(manager1.search(100) == 0)
+		ASSERT_TRUE(manager1.search(DronesManager::DroneRecord(100)) == 0)
 		manager1.insert_front(DronesManager::DroneRecord(100));
 		manager2.insert_back(DronesManager::DroneRecord(100));	
 		// checks if the first DroneRecord in each manager is the same, then checks the DroneRecord value	
 		ASSERT_TRUE(manager1.select(0) == manager2.select(0) && manager1.select(0) == DronesManager::DroneRecord(100))
 		// checks if the first DroneRecord in each manager have to same index
-		ASSERT_TRUE(manager1.search(100) == manager2.search(100))
+		ASSERT_TRUE(manager1.search(DronesManager::DroneRecord(100)) == manager2.search(DronesManager::DroneRecord(100)))
 		manager1.insert_front(DronesManager::DroneRecord(150));
 		// checks if search returns size when value is not found
-		ASSERT_TRUE(manager1.search(200) == manager1.size)
+		ASSERT_TRUE(manager1.search(DronesManager::DroneRecord(200)) == manager1.size)
 		return true;	
 	}
 	
@@ -81,7 +81,17 @@ public:
 	
 	// PURPOSE: inserting at different positions in the list
 	bool test7() {
-	    return false;
+	    DronesManager manager1;
+	    manager1.insert_front(DronesManager::DroneRecord(100));
+		manager1.insert_front(DronesManager::DroneRecord(200));
+		manager1.insert_front(DronesManager::DroneRecord(300));
+		manager1.insert_front(DronesManager::DroneRecord(400));
+		manager1.insert(DronesManager::DroneRecord(500), 2);
+		manager1.print();
+		// checks if inserting at an index out of range returns false
+		ASSERT_TRUE(manager1.insert(DronesManager::DroneRecord(123),10) == false)
+		ASSERT_TRUE(manager1.search(DronesManager::DroneRecord(500)) == 2)
+		return true;
 	}
 	
 	// PURPOSE: try to remove too many elements, then add a few elements
