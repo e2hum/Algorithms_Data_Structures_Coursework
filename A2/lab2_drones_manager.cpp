@@ -44,7 +44,7 @@ DronesManager::DroneRecord DronesManager::select(unsigned int index) const {
 		return DroneRecord(0);
 	}
 	//case 2; index too big
-	else if (index > size) {
+	else if (index > size || index < 0) {
 		return *last;
 	}
 	//general case
@@ -225,7 +225,18 @@ bool DronesManager::remove_back() {
 }
 
 bool DronesManager::replace(unsigned int index, DroneRecord value) {
-	return false;
+	DroneRecord* temp = new DroneRecord(value);
+	// if index is invalid, returns false
+	if (index >= size || index < 0)
+		return false;
+	
+	else {
+		(*this).remove(index);
+		(*this).print();
+		(*this).insert(value, index);
+		(*this).print();
+	}
+	return true;
 }
 
 bool DronesManager::reverse_list() {

@@ -55,23 +55,47 @@ public:
 	
 	// PURPOSE: remove_front() and remove_back() on one-element list
 	bool test4() {
-		DronesManager m1, m2;
-		m1.insert_front(DronesManager::DroneRecord(2));
-		m1.insert_front(DronesManager::DroneRecord(1));
-		//1, 2
-		m1.remove_back();
-		m1.print();
-		
-		m2.insert_front(DronesManager::DroneRecord(1));
-		m2.print();
-		cout<<endl;
-		ASSERT_TRUE(m1.select(0) == m2.select(0));
-	    return true;
+	    DronesManager manager1, manager2;
+	    // checks if remove_front when manager is empty returns false
+	    ASSERT_FALSE(manager1.remove_front())
+	    // checks if remove_back when manager is empty returns false
+	    ASSERT_FALSE(manager1.remove_back())
+		manager1.insert_front(DronesManager::DroneRecord(100));
+		// checks if remove_front works when there is only one DroneRecord
+		manager1.remove_front();
+		ASSERT_TRUE(manager1.size == 0)
+		manager1.insert_front(DronesManager::DroneRecord(100));
+		// checks if remove_back works when there is only one DroneRecord
+		manager1.remove_back();
+		ASSERT_TRUE(manager1.size == 0)
+		manager1.insert_front(DronesManager::DroneRecord(100));
+		manager1.insert_front(DronesManager::DroneRecord(200));
+		manager1.insert_front(DronesManager::DroneRecord(300));
+		manager1.insert_front(DronesManager::DroneRecord(400));
+		manager1.remove_front();
+		manager1.remove_back();
+		manager2.insert_front(DronesManager::DroneRecord(200));
+		manager2.insert_front(DronesManager::DroneRecord(300));
+		// checks if manager1 has all the same DroneRecords as manager2
+		// tests both remove_front and remove_back as manager2 is the expected
+		// outcome after both functions have been called
+		for (int num = 0; num < manager1.size; num++) {
+			ASSERT_TRUE(manager1.select(num) == manager2.select(num))
+		}
+		return true;
 	}
 	
 	// PURPOSE: replace() and reverse_list() work properly
 	bool test5() {
-	    return false;
+	    DronesManager manager1;
+	    manager1.insert_front(DronesManager::DroneRecord(100));
+		manager1.insert_front(DronesManager::DroneRecord(200));
+		manager1.insert_front(DronesManager::DroneRecord(300));
+		manager1.insert_front(DronesManager::DroneRecord(400));
+		manager1.replace(2, DronesManager::DroneRecord(600));
+		ASSERT_TRUE(manager1.search(600) == 2)
+		manager1.print();
+		return true;
 	}
 	
 	// PURPOSE: insert_front() keeps moving elements forward
@@ -87,9 +111,9 @@ public:
 		manager1.insert_front(DronesManager::DroneRecord(300));
 		manager1.insert_front(DronesManager::DroneRecord(400));
 		manager1.insert(DronesManager::DroneRecord(500), 2);
-		manager1.print();
 		// checks if inserting at an index out of range returns false
 		ASSERT_TRUE(manager1.insert(DronesManager::DroneRecord(123),10) == false)
+		// checks if inserting at index 2 returns a search value of 2
 		ASSERT_TRUE(manager1.search(DronesManager::DroneRecord(500)) == 2)
 		return true;
 	}
