@@ -247,6 +247,8 @@ bool DronesManager::reverse_list() {
 	}
 	//general case
 	else{
+		DroneRecord* temp_first = first;
+		DroneRecord* temp_last = last;
 		DroneRecord *curr = first;
 		DroneRecord *before = NULL;
 		DroneRecord *after = NULL;
@@ -257,6 +259,8 @@ bool DronesManager::reverse_list() {
 			before = curr;
 			curr = after;
 		}
+		first = temp_last;
+		last = temp_first;
 	}
 	return true;
 }

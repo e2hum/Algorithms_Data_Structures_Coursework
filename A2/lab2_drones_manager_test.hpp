@@ -133,11 +133,11 @@ public:
 		DronesManager m1;
 		for(int x = 0; x<10; x++)
 			m1.insert_back(DronesManager::DroneRecord(x+1));
-	   	cout<<"forward"<<endl;
-	   	m1.print();
+	   	//cout<<"forward"<<endl;
+	   	//m1.print();
 	   	m1.reverse_list();
-		cout<<"backwards"<<endl;
-		m1.print();
+		//cout<<"backwards"<<endl;
+		//m1.print();
 		return true;
 	} 
 };
