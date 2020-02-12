@@ -165,7 +165,7 @@ bool DronesManager::remove(unsigned int index) {
 		return false;
 	//invalid index
 	else if (index>size-1 || index < 0){
-		return false
+		return false;
 	}
 	//general case
 	else{
@@ -174,7 +174,7 @@ bool DronesManager::remove(unsigned int index) {
 			itera = itera->next;
 		}
 		itera->prev->next = itera->next;
-		itera->next->prev = itera-prev;
+		itera->next->prev = itera->prev;
 		delete itera;
 		itera = NULL;
 	}
@@ -248,14 +248,14 @@ bool DronesManager::reverse_list() {
 	//general case
 	else{
 		DroneRecord *curr = first;
-		DroneRecord *pre = NULL;
-		DroneRecord *nex = NULL;
+		DroneRecord *before = NULL;
+		DroneRecord *after = NULL;
 		while(curr){
-			nex = curr->next;
-			cur->next = prev;
-			cur->prev = next;
-			pre = curr;
-			curr = next;
+			after = curr->next;
+			curr->next = before;
+			curr->prev = after;
+			before = curr;
+			curr = after;
 		}
 	}
 	return true;

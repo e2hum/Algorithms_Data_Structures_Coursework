@@ -94,7 +94,7 @@ public:
 		manager1.insert_front(DronesManager::DroneRecord(400));
 		manager1.replace(2, DronesManager::DroneRecord(600));
 		ASSERT_TRUE(manager1.search(600) == 2)
-		manager1.print();
+		//manager1.print();
 		return true;
 	}
 	
@@ -130,7 +130,15 @@ public:
 	    	
 	// PURPOSE: lots of inserts, reverse the list, and then lots of removes until empty
 	bool test10() {
-	   return false;
+		DronesManager m1;
+		for(int x = 0; x<10; x++)
+			m1.insert_back(DronesManager::DroneRecord(x+1));
+	   	cout<<"forward"<<endl;
+	   	m1.print();
+	   	m1.reverse_list();
+		cout<<"backwards"<<endl;
+		m1.print();
+		return true;
 	} 
 };
 
