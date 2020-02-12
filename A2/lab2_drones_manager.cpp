@@ -11,8 +11,7 @@ DronesManager::~DronesManager() {
 	while(size > 0){
 		remove_back();
 	}
-	delete(first);
-	delete(last);
+	first = last = NULL;
 }
 
 bool operator==(const DronesManager::DroneRecord& lhs, const DronesManager::DroneRecord& rhs) {
@@ -39,8 +38,7 @@ bool DronesManager::empty() const {
 
 DronesManager::DroneRecord DronesManager::select(unsigned int index) const {
 	DroneRecord* value = first;
-	return *value;
-	/*cout<<"DroneID: "<<value->droneID;
+	cout<<"DroneID: "<<value->droneID;
 	//case 1; empty
 	if (!value){
 		return DroneRecord(0);
@@ -55,28 +53,37 @@ DronesManager::DroneRecord DronesManager::select(unsigned int index) const {
 			value = value->next;	
 		}
 		return *value;
-	}*/
+	}
 }
 
 unsigned int DronesManager::search(DroneRecord value) const {
 	DroneRecord* position = first;
+	int index = 0;
 	if (size == 0)
 		return 0;
 	else {
-		for (int index = 0; index < size; index++) {
-			if (*position == value)
+		while(position->next) {
+			if (position->droneID == value.droneID)
 				return index;
-			else
-				return size;
+		position = position->next;
+		index++;
 		}
+		return size;
 	}
 }
 
 void DronesManager::print() const {
-	DroneRecord* printer = first;
-	for (int index = 0; index < size; index++) {
-		cout << first->droneID << endl;
-		printer = printer->next;
+	if (size == 0){
+		cout<<"Empty";
+		return;
+	}else{
+		DroneRecord* it = first;
+		int count = 1;
+		while (it&&it->next){
+			cout<<"Drone #: "<<count<<" DroneID: " <<it->droneID<<endl;
+			it= it->next;
+			count++;
+		}
 	}
 }
 
@@ -137,7 +144,24 @@ bool DronesManager::remove_front() {
 }
 
 bool DronesManager::remove_back() {
-	return false;
+	//empty
+	if(!first){
+		return false;
+	}
+	//single element
+	else if(!first->next){
+		delete first;
+		first = NULL;
+		last = NULL;
+	}
+	//general case
+	else{
+		DroneRecord *temp = last->prev;
+		delete last;
+		last = temp;
+	}
+	--size;
+	return true;
 }
 
 bool DronesManager::replace(unsigned int index, DroneRecord value) {

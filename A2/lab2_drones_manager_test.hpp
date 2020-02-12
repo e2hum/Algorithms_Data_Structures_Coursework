@@ -21,21 +21,15 @@ public:
 	// PURPOSE: insert_front() and insert_back() on zero-element list
 	int test2() {
 		DronesManager manager1, manager2;
-		cout<<"part 1";
 		manager1.insert_front(DronesManager::DroneRecord(100));
 		manager2.insert_back(DronesManager::DroneRecord(100));
-		cout<<"part 2";
 		ASSERT_TRUE(manager1.get_size() == manager2.get_size() && manager1.get_size() == 1)
-		cout<<"part 3";
 		ASSERT_TRUE(manager1.first != NULL && manager1.first == manager1.last)
 		ASSERT_TRUE(manager2.first != NULL && manager2.first == manager2.last)
-		cout<<"part 4";
 		ASSERT_TRUE(manager1.first->prev == NULL && manager1.last->next == NULL)
 		ASSERT_TRUE(manager2.first->prev == NULL && manager2.last->next == NULL)
-		cout<<"part 5";
 		ASSERT_TRUE(manager1.select(0) == manager2.select(0) && manager1.select(0) == DronesManager::DroneRecord(100))	
-		cout<<"part 6";
-	    return 1;
+	    return true;
 	}
 	
 	// TODO: Implement all of the test cases below
@@ -46,12 +40,13 @@ public:
 		manager1.insert_front(DronesManager::DroneRecord(100));
 		manager2.insert_back(DronesManager::DroneRecord(100));		
 		ASSERT_TRUE(manager1.select(0) == manager2.select(0) && manager1.select(0) == DronesManager::DroneRecord(100))
-		cout << "IM WORKING" << endl;
 		ASSERT_TRUE(manager1.search(100) == manager2.search(100))
-		cout << "IM WOrKING TOOOO" << endl;
-		manager1.insert_front(DronesManager::DroneRecord(150));
+		manager1.insert_back(DronesManager::DroneRecord(150));
 		cout << manager1.search(150) << endl;
 		cout << manager1.search(100);
+		cout << endl << endl;
+		manager1.print();
+		cout << endl << endl;
 		ASSERT_TRUE(manager1.search(100) == 1)
 		cout << "YAY I WORK";
 		return true;	
