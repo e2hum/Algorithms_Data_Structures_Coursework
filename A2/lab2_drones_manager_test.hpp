@@ -32,14 +32,12 @@ public:
 	    return true;
 	}
 	
-	// TODO: Implement all of the test cases below
-	
 	// PURPOSE: select() and search() work properly
 	bool test3() {
 		DronesManager manager1, manager2;
-		// checks if when the manager is empty, returns DroneRecord(0)
+		// note that when the manager is empty, select() returns DroneRecord(0)
 		ASSERT_TRUE(manager1.select(0) == DronesManager::DroneRecord(0))
-		// checks if when the manager is empty, search returns 0
+		// note that when the manager is empty, search returns 0
 		ASSERT_TRUE(manager1.search(DronesManager::DroneRecord(100)) == 0)
 		manager1.insert_front(DronesManager::DroneRecord(100));
 		manager2.insert_back(DronesManager::DroneRecord(100));	
