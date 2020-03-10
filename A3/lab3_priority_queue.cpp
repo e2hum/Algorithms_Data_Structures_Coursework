@@ -4,11 +4,23 @@ using namespace std;
 
 // PURPOSE: Parametric constructor 
 // initializes heap to an array of (n_capacity + 1) elements
-PriorityQueue::PriorityQueue(unsigned int n_capacity) {
+PriorityQueue::PriorityQueue(unsigned int n_capacity) 
+{
+	//heap is an array of pointers which, each pointer points to a task item
+	heap = new TaskItem*[n_capacity+1];
+	capacity = n_capacity;
+	size = 0;
 }
 
 // PURPOSE: Explicit destructor of the class PriorityQueue
-PriorityQueue::~PriorityQueue() {
+PriorityQueue::~PriorityQueue() 
+{
+	for (int index = 0; index < size; index++){
+		delete heap[index+1];
+		heap [index+1] = NULL;
+	}
+	delete [] heap;
+	heap = NULL;
 }
 
 // PURPOSE: Returns the number of elements in the priority queue
