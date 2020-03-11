@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <sstream>
 #include <queue>
+#include <iostream>
 
 #include "lab3_priority_queue.hpp"
 #include "lab3_binary_search_tree.hpp"
@@ -30,7 +31,7 @@ public:
 		ASSERT_TRUE( !q.full() );
 		ASSERT_TRUE( q.get_size() == 1 );
 		ASSERT_TRUE( q.max().priority == 10 );
-
+		
 		ASSERT_TRUE( q.dequeue() );
 		ASSERT_TRUE( q.empty() );
 		ASSERT_TRUE( !q.full() );
@@ -58,29 +59,36 @@ public:
 	// PURPOSE: Tests enqueue too many then dequeue too many
 	bool test4() {
 		PriorityQueue q(3);
+		
 		ASSERT_TRUE( q.enqueue(PriorityQueue::TaskItem(5,"Test Task")) );
 		ASSERT_TRUE( q.max().priority == 5 );
+		
 		ASSERT_TRUE( q.enqueue(PriorityQueue::TaskItem(3,"Test Task")) );
 		ASSERT_TRUE( q.max().priority == 5 );
 		ASSERT_TRUE( q.enqueue(PriorityQueue::TaskItem(4,"Test Task")) );
 		ASSERT_TRUE( q.max().priority == 5 );
 		ASSERT_TRUE( q.full() );
-
+	
 		ASSERT_TRUE( !q.enqueue(PriorityQueue::TaskItem(7,"Test Task")) );
 		ASSERT_TRUE( q.max().priority == 5 );
 		ASSERT_TRUE( q.full() );
 
+cout<<"up to here";
 		ASSERT_TRUE( q.dequeue() );
 		ASSERT_TRUE( q.max().priority == 4 );
+		cout<<"1";
 		ASSERT_TRUE( q.dequeue() );
 		ASSERT_TRUE( q.max().priority == 3 );
+		cout<<"2";
 		ASSERT_TRUE( q.dequeue() );
 		ASSERT_TRUE( q.empty() );
+		cout<<"3";
 		ASSERT_TRUE( !q.full() );
-
+		cout<<"4";
 		ASSERT_TRUE( !q.dequeue() );
 		ASSERT_TRUE( q.empty() );
 		ASSERT_TRUE( !q.full() );
+		cout << "done";
 		return true;
 	}
 };

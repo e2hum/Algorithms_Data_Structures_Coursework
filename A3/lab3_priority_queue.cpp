@@ -21,6 +21,8 @@ PriorityQueue::~PriorityQueue()
 	}
 	delete [] heap;
 	heap = NULL;
+	size = 0;
+	capacity = 0;
 }
 
 // PURPOSE: Returns the number of elements in the priority queue
@@ -48,7 +50,7 @@ bool PriorityQueue::full() const {
 
 // PURPOSE: Prints the contents of the priority queue; format not specified
 void PriorityQueue::print() const {
-	for (int index = 0; index < size; index++) {
+	for (int index = 1; index < size + 1; index++) {
 		cout << "Priority: " << heap[index]->priority 
 		<< " Description: " << heap[index]->description << endl;
 	}
@@ -62,10 +64,14 @@ PriorityQueue::TaskItem PriorityQueue::max() const {
 		return TaskItem(-1, "NULL");
 	else {
 		int max = 0;
-		for (int index = 0; index < size; index++) {
-			if (max < heap[index]->priority)
+		TaskItem* temp = NULL;
+		for (int index = 1; index < size + 1; index++) {
+			if (max < heap[index]->priority) {
 				max = heap[index]->priority;
+				temp = heap[index];
+			}
 		}
+		return *temp;
 	}
 }
 
@@ -73,7 +79,7 @@ PriorityQueue::TaskItem PriorityQueue::max() const {
 // re-arranges the elements back into a heap
 // returns true if successful and false otherwise
 // priority queue does not change in capacity
-bool PriorityQueue::enqueue( TaskItem val ) {
+bool PriorityQueue::enqueue(TaskItem val) {
 	// returns false if queue is full
 	if (size == capacity)
 		return false;
@@ -110,12 +116,14 @@ bool PriorityQueue::dequeue() {
 	}
 	// general case
 	else {
-		int i = size;
+		int i = 1;
+		// moves last value into root position
 		while (i > 1) {
-			TaskItem* temp = heap[i];
+			TaskItem* last = heap[i];
 			heap[i] = heap[i/2];
-			heap[i/2] = temp;
+			heap[i/2] = last;
 			i /= 2;
+		// NEED: move root down to last position
 		}
 		delete heap[size];
 		heap[size] = NULL;
@@ -126,7 +134,7 @@ bool PriorityQueue::dequeue() {
 			heap[i/2] = temp;
 			i /= 2;
 		}
+	}
 	size--;
 	return true;
-	}
 }
