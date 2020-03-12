@@ -26,8 +26,6 @@ int main() {
     pqueue_test_results[1] = pqueue_test.test2();
     pqueue_test_results[2] = pqueue_test.test3();
     pqueue_test_results[3] = pqueue_test.test4();
-    cout << "fined";
-
 	cout << "PRIORITY QUEUE TESTING RESULTS \n";
 	cout << "****************************** \n";
 	for (int i = 0; i < 4; ++i) {

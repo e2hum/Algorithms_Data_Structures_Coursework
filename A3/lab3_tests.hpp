@@ -59,36 +59,31 @@ public:
 	// PURPOSE: Tests enqueue too many then dequeue too many
 	bool test4() {
 		PriorityQueue q(3);
-		
 		ASSERT_TRUE( q.enqueue(PriorityQueue::TaskItem(5,"Test Task")) );
 		ASSERT_TRUE( q.max().priority == 5 );
-		
 		ASSERT_TRUE( q.enqueue(PriorityQueue::TaskItem(3,"Test Task")) );
 		ASSERT_TRUE( q.max().priority == 5 );
 		ASSERT_TRUE( q.enqueue(PriorityQueue::TaskItem(4,"Test Task")) );
 		ASSERT_TRUE( q.max().priority == 5 );
 		ASSERT_TRUE( q.full() );
-	
 		ASSERT_TRUE( !q.enqueue(PriorityQueue::TaskItem(7,"Test Task")) );
 		ASSERT_TRUE( q.max().priority == 5 );
 		ASSERT_TRUE( q.full() );
-
-cout<<"up to here";
+		q.print();
 		ASSERT_TRUE( q.dequeue() );
+		q.print();
 		ASSERT_TRUE( q.max().priority == 4 );
-		cout<<"1";
 		ASSERT_TRUE( q.dequeue() );
+		cout << "maybe?";
 		ASSERT_TRUE( q.max().priority == 3 );
-		cout<<"2";
 		ASSERT_TRUE( q.dequeue() );
 		ASSERT_TRUE( q.empty() );
-		cout<<"3";
 		ASSERT_TRUE( !q.full() );
-		cout<<"4";
+		cout << "yyes";
 		ASSERT_TRUE( !q.dequeue() );
+		cout << "work";
 		ASSERT_TRUE( q.empty() );
 		ASSERT_TRUE( !q.full() );
-		cout << "done";
 		return true;
 	}
 };

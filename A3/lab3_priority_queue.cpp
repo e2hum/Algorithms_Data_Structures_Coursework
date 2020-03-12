@@ -116,24 +116,46 @@ bool PriorityQueue::dequeue() {
 	}
 	// general case
 	else {
-		int i = 1;
-		// moves last value into root position
-		while (i > 1) {
-			TaskItem* last = heap[i];
-			heap[i] = heap[i/2];
-			heap[i/2] = last;
-			i /= 2;
-		// NEED: move root down to last position
-		}
+		// move root down to last position
+		TaskItem* first = heap[1];
+		heap[1] = heap[size];
+		heap[size] = first;
+		// delete former root
 		delete heap[size];
 		heap[size] = NULL;
-		i = size;
-		while (i > 1 && heap[i/2]->priority < heap[i]->priority) {
-			TaskItem* temp = heap[i];
-			heap[i] = heap[i/2];
-			heap[i/2] = temp;
-			i /= 2;
+		int i = 1, left_or_right = 0;
+
+		while (i < size-1) {
+			// if there are only 2 elements, put higher priority first
+			if (size-1 < 3) {
+				if (heap[1]->priority < heap[2]->priority) {
+					TaskItem* temp = heap[1];
+					heap[1] = heap[2];
+					heap[2] = temp;
+				}
+				else {
+					i = size;
+				}
+			}
+			
+			else {
+				// checks if right side or left side has higher priority
+				if (heap[i*2]->priority < heap[i*2+1]->priority)
+					left_or_right = 1;
+				else
+					left_or_right = 0;
+				// if parent is less than child, swap parent and child
+				if (heap[i]->priority < heap[i*2+left_or_right]->priority) {
+					TaskItem* temp = heap[i];
+					heap[i] = heap[i*2+left_or_right];
+					heap[i*2+left_or_right] = temp;
+					i = i*2+left_or_right;
+				}
+				else
+					i = size;
+				}
 		}
+
 	}
 	size--;
 	return true;
