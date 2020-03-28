@@ -117,7 +117,47 @@ bool BinarySearchTree::insert( BinarySearchTree::TaskItem val ) {
 // PURPOSE: Removes the node with the value val from the tree
 // returns true if successful; returns false otherwise
 bool BinarySearchTree::remove( BinarySearchTree::TaskItem val ) {
-    return false;
+	if(!exist(val))
+		return false;
+
+	//get pointer to parent node 'parent'
+
+	//case 1, val is leaf node (no children)
+	if(!(val->left || val->right )){
+		parent->left = NULL;
+		parent->right = NULL;
+		delete val;
+		val = NULL;
+	}//case 2 val has single child
+	else if(val->left ^ val->right){
+		//create pointer to child
+		TaskItem* child;
+		if (val->left)
+			child = val->left;
+		else 
+			child = val->right;
+		//create pointer to node being deleted
+		TaskItem* temp = val;
+		//link parent to child
+		if (parent->left==val)
+			parent->left = child;
+		else
+			parent->right = child
+		//delete temp node
+		delete temp;
+		temp = NULL;
+	}
+
+	size--;
+	return true;
+}
+
+//helper returns true if child is on left node;
+bool BinarySearchTree::isChildLeft(BinarySearchTree::TaskItem child, BinarySearchTree::TaskItem parent){
+	if (parent->left == child)
+		return true;
+	else
+		return false;
 }
 
 void clean_up(TaskItem* T) {
