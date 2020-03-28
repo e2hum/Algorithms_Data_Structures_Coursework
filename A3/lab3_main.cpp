@@ -43,7 +43,6 @@ int main() {
       "Test7: Test depth with many inserts and some removes",
       "Test8: Lots of inserts and removes"
 	};    
-	
     bool bst_test_results[8];
     bst_test_results[0] = bst_test.test1();
     bst_test_results[1] = bst_test.test2();

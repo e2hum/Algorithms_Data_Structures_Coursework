@@ -48,18 +48,38 @@ BinarySearchTree::TaskItem BinarySearchTree::min() const {
 	return *cur;
 }
 
+unsigned int BinarySearchTree::height(TaskItem* val) const {
+	// Base case: return -1 for empty tree
+	if (!val)
+		return -1;
+	// General case: return 1 + max(height(left), height(right))
+	else
+		return (1 + std::max(height(val->left), height(val->right)));
+}
+
 // PURPOSE: Returns the tree height
 unsigned int BinarySearchTree::height() const {
-	
+	TaskItem* cur = root;
+	height(cur);
 }
 
 // PURPOSE: Prints the contents of the tree; format not specified
 void BinarySearchTree::print() const {
+	in_order(root);
+}
+
+void BinarySearchTree::in_order(TaskItem* val) const {
+	if (!val) 
+		return;
+	in_order(val->left);
+	cout << "Priority: " << val->priority << endl
+		 << "Description: " << val->description << endl;
+	in_order(val->right);
 }
 
 // PURPOSE: Returns true if a node with the value val exists in the tree	
 // otherwise, returns false
-bool BinarySearchTree::exists( BinarySearchTree::TaskItem val ) const {
+bool BinarySearchTree::exists( BinarySearchTree::TaskItem val) const {
 		TaskItem* cur = root;
 		while (cur) {
 			if (cur->priority == val.priority)
@@ -119,10 +139,10 @@ bool BinarySearchTree::insert( BinarySearchTree::TaskItem val ) {
 bool BinarySearchTree::remove( BinarySearchTree::TaskItem val ) {
     return false;
 }
-
-void clean_up(TaskItem* T) {
-	if (T == NULL) return;
-	clean_up(T->left);
-	clean_up(T->right);
-	delete T;
+// deletes all the nodes in the tree
+void BinarySearchTree::clean_up(TaskItem* val) {
+	if (val == NULL) return;
+	clean_up(val->left);
+	clean_up(val->right);
+	delete val;
 }
