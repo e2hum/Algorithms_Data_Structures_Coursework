@@ -1,0 +1,34 @@
+# Project: Project1
+# Makefile created by Dev-C++ 5.11
+
+CPP      = g++.exe
+CC       = gcc.exe
+WINDRES  = windres.exe
+OBJ      = lab3_binary_search_tree.o lab3_main.o lab3_priority_queue.o
+LINKOBJ  = lab3_binary_search_tree.o lab3_main.o lab3_priority_queue.o
+LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc
+INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
+CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
+BIN      = test_proj.exe
+CXXFLAGS = $(CXXINCS) 
+CFLAGS   = $(INCS) 
+RM       = rm.exe -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)
+
+lab3_binary_search_tree.o: lab3_binary_search_tree.cpp
+	$(CPP) -c lab3_binary_search_tree.cpp -o lab3_binary_search_tree.o $(CXXFLAGS)
+
+lab3_main.o: lab3_main.cpp
+	$(CPP) -c lab3_main.cpp -o lab3_main.o $(CXXFLAGS)
+
+lab3_priority_queue.o: lab3_priority_queue.cpp
+	$(CPP) -c lab3_priority_queue.cpp -o lab3_priority_queue.o $(CXXFLAGS)
