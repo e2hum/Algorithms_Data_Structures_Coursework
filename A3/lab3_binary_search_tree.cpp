@@ -12,6 +12,9 @@ BinarySearchTree::BinarySearchTree() {
 
 // PURPOSE: Explicit destructor of the class BinarySearchTree
 BinarySearchTree::~BinarySearchTree() {
+	clean_up(root);
+	root = NULL;
+	size = 0;
 }
 
 // PURPOSE: Returns the number of nodes in the tree
@@ -115,4 +118,11 @@ bool BinarySearchTree::insert( BinarySearchTree::TaskItem val ) {
 // returns true if successful; returns false otherwise
 bool BinarySearchTree::remove( BinarySearchTree::TaskItem val ) {
     return false;
+}
+
+void clean_up(TaskItem* T) {
+	if (T == NULL) return;
+	clean_up(T->left);
+	clean_up(T->right);
+	delete T;
 }
