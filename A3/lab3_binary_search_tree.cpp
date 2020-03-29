@@ -197,7 +197,7 @@ bool BinarySearchTree::remove( BinarySearchTree::TaskItem val ) {
 	//case 3, val has two children
 	else{
 		//FINDS and STORES largest node from left child's branch 
-		BinarySearchTree::TaskItem* cur = val->left;
+		TaskItem* cur = val->left;
 		while(cur->right && cur)
 			cur = cur->right;
 		//REMOVES cur from its original position 
