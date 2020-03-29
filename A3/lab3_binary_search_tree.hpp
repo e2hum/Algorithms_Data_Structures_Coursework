@@ -79,7 +79,8 @@ public:
 	// PURPOSE: Removes the node with the value val from the tree
 	// returns true if successful; returns false otherwise
 	bool remove(TaskItem val);
-	
+	bool isChildLeft(TaskItem* child, TaskItem* parent);
+
 	void clean_up(TaskItem* val);
 };
 #endif

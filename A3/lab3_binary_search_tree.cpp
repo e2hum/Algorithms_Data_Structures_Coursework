@@ -137,13 +137,13 @@ bool BinarySearchTree::insert( BinarySearchTree::TaskItem val ) {
 // PURPOSE: Removes the node with the value val from the tree
 // returns true if successful; returns false otherwise
 bool BinarySearchTree::remove( BinarySearchTree::TaskItem val ) {
-	if(!exist(val))
+	if(!exists(val))
 		return false;
 
 	//GET parent
 	TaskItem* parent = NULL;
 	TaskItem* cur = root;
-	while (!(cur==val)) {
+	while (!(*cur==val)) {
 		// move left if given key is smaller than cur's key
 		parent = cur;
 		if (val.priority < cur->priority)
@@ -154,12 +154,13 @@ bool BinarySearchTree::remove( BinarySearchTree::TaskItem val ) {
 	}
 
 	//case 0, val is root
-	if(val == root){
+	if(val == *root){
 		//igor hasnt responded to my slack yet
+		cout << "root";
 	}
 	//case 1, val is leaf node (no children)
-	else if(!(val->left || val->right )){
-		if (parent->left==val){
+	else if(!(val.left || val.right )){
+		if (*(parent->left)==val){
 			delete parent->left;
 			parent->left = NULL;
 		}else{
@@ -169,22 +170,22 @@ bool BinarySearchTree::remove( BinarySearchTree::TaskItem val ) {
 	}
 	//case 2, val has single child
 	//alternative for xor: if(!A != !B)
-	else if(val->left ^ val->right){
+	else if(!val.left != !val.right){
 		//create pointer to ONLY child
 		TaskItem* child;
-		if (val->left)
-			child = val->left;
+		if (val.left)
+			child = val.left;
 		else 
-			child = val->right;
+			child = val.right;
 		//create pointer to node being deleted
 		TaskItem* temp;
-		if (parent->left==val)
+		if (*(parent->left)==val)
 			temp = parent->left;
 		else
 			temp = parent->right;
 
 		//link parent to child
-		if (parent->left==val)
+		if (*(parent->left)==val)
 			parent->left = child;
 		else
 			parent->right = child;
@@ -197,18 +198,18 @@ bool BinarySearchTree::remove( BinarySearchTree::TaskItem val ) {
 	//case 3, val has two children
 	else{
 		//FINDS and STORES largest node from left child's branch 
-		TaskItem* cur = val->left;
+		TaskItem* cur = val.left;
 		while(cur->right && cur)
 			cur = cur->right;
 		//REMOVES cur from its original position 
-		BinarySearchTree::remove(cur);
+		BinarySearchTree::remove(*cur);
 		//REPLACES val with cur
-		if (parent->left==val)
+		if (*(parent->left)==val)
 			parent->left = cur;
 		else
 			parent->right = cur;		
-		cur->left = val->left;
-		cur->right = val->right;
+		cur->left = val.left;
+		cur->right = val.right;
 	}
 
 	size--;
@@ -216,7 +217,7 @@ bool BinarySearchTree::remove( BinarySearchTree::TaskItem val ) {
 }
 
 //helper returns true if child is on left node;
-bool BinarySearchTree::isChildLeft(BinarySearchTree::TaskItem child, BinarySearchTree::TaskItem parent){
+bool BinarySearchTree::isChildLeft(BinarySearchTree::TaskItem* child, BinarySearchTree::TaskItem* parent){
 	if (parent->left == child)
 		return true;
 	else
