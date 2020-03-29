@@ -163,7 +163,12 @@ bool BinarySearchTree::remove( BinarySearchTree::TaskItem val ) {
 		else
 			cur = cur->right;
 	}
-
+	int children = 0;
+	if (val.left)
+		children++;
+	if (val.right)
+		children++;
+	
 	//case 0, val is root
 	if(val == *root){
 		cout << "case0" << endl;
@@ -183,7 +188,7 @@ bool BinarySearchTree::remove( BinarySearchTree::TaskItem val ) {
 			
 	}
 	//case 1, val is leaf node (no children)
-	else if(!(val.left || val.right )){
+	else if(children == 0){
 		std::cout << "case1" << endl;
 		if (*(parent->left)==val){
 			delete parent->left;
@@ -195,7 +200,7 @@ bool BinarySearchTree::remove( BinarySearchTree::TaskItem val ) {
 	}
 	//case 2, val has single child
 	//alternative for xor: if(!A != !B)
-	else if(!val.left != !val.right){
+	else if(children == 1){
 		std::cout << "case2" << endl;
 		//create pointer to ONLY child
 		TaskItem* child;
