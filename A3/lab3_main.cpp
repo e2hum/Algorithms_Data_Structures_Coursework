@@ -52,7 +52,7 @@ int main() {
     bst_test_results[5] = bst_test.test6();
     bst_test_results[6] = bst_test.test7();
     bst_test_results[7] = bst_test.test8();
-	cout << "updates";
+	cout << "sdff";
 	cout << "BINARY SEARCH TREE TESTING RESULTS \n";
 	cout << "********************************** \n";
 	for (int i = 0; i < 8; ++i) {

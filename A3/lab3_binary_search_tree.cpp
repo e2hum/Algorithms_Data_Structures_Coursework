@@ -65,7 +65,10 @@ unsigned int BinarySearchTree::height() const {
 
 // PURPOSE: Prints the contents of the tree; format not specified
 void BinarySearchTree::print() const {
+	cout << endl << "In_Order" << endl;
 	in_order(root);
+	cout << endl << "Pre_Order" << endl;
+	pre_order(root);
 }
 
 void BinarySearchTree::in_order(TaskItem* val) const {
@@ -75,6 +78,14 @@ void BinarySearchTree::in_order(TaskItem* val) const {
 	cout << "Priority: " << val->priority << endl
 		 << "Description: " << val->description << endl;
 	in_order(val->right);
+}
+void BinarySearchTree::pre_order(TaskItem* val) const {
+	if (!val) 
+		return;
+	cout << "Priority: " << val->priority << endl
+	 	<< "Description: " << val->description << endl;
+	pre_order(val->left);
+	pre_order(val->right);
 }
 
 // PURPOSE: Returns true if a node with the value val exists in the tree	
@@ -155,11 +166,25 @@ bool BinarySearchTree::remove( BinarySearchTree::TaskItem val ) {
 
 	//case 0, val is root
 	if(val == *root){
-		//igor hasnt responded to my slack yet
-		cout << "root";
+		cout << "case0" << endl;
+		if (size==1) {
+			delete root;
+			root = NULL;
+		}
+		else {
+			//FINDS and STORES largest node from left child's branch 
+			TaskItem* cur = val.left;
+			while(cur->right && cur)
+				cur = cur->right;
+			//REMOVES cur from its original position 
+			BinarySearchTree::remove(*cur);
+			root = cur;
+		}
+			
 	}
 	//case 1, val is leaf node (no children)
 	else if(!(val.left || val.right )){
+		std::cout << "case1" << endl;
 		if (*(parent->left)==val){
 			delete parent->left;
 			parent->left = NULL;
@@ -171,6 +196,7 @@ bool BinarySearchTree::remove( BinarySearchTree::TaskItem val ) {
 	//case 2, val has single child
 	//alternative for xor: if(!A != !B)
 	else if(!val.left != !val.right){
+		std::cout << "case2" << endl;
 		//create pointer to ONLY child
 		TaskItem* child;
 		if (val.left)
@@ -197,6 +223,7 @@ bool BinarySearchTree::remove( BinarySearchTree::TaskItem val ) {
 	}
 	//case 3, val has two children
 	else{
+		std::cout << "case3" << endl;
 		//FINDS and STORES largest node from left child's branch 
 		TaskItem* cur = val.left;
 		while(cur->right && cur)
