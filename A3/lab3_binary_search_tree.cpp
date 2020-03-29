@@ -164,9 +164,9 @@ bool BinarySearchTree::remove( BinarySearchTree::TaskItem val ) {
 			cur = cur->right;
 	}
 	int children = 0;
-	if (val.left)
+	if (cur->left)
 		children++;
-	if (val.right)
+	if (cur->right)
 		children++;
 	
 	//case 0, val is root
@@ -178,12 +178,17 @@ bool BinarySearchTree::remove( BinarySearchTree::TaskItem val ) {
 		}
 		else {
 			//FINDS and STORES largest node from left child's branch 
-			TaskItem* cur = val.left;
+			TaskItem* cur = root->left;
+			TaskItem* right = root->right;
+			TaskItem* left = root->left;
 			while(cur->right && cur)
 				cur = cur->right;
 			//REMOVES cur from its original position 
 			BinarySearchTree::remove(*cur);
+			delete root;
 			root = cur;
+			root->left = left;
+			root->right = right;
 		}
 			
 	}
@@ -204,10 +209,10 @@ bool BinarySearchTree::remove( BinarySearchTree::TaskItem val ) {
 		std::cout << "case2" << endl;
 		//create pointer to ONLY child
 		TaskItem* child;
-		if (val.left)
-			child = val.left;
+		if (cur->left)
+			child = cur->left;
 		else 
-			child = val.right;
+			child = cur->right;
 		//create pointer to node being deleted
 		TaskItem* temp;
 		if (*(parent->left)==val)

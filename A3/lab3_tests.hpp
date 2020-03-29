@@ -176,15 +176,9 @@ public:
 		ASSERT_TRUE(bst.insert(BinarySearchTree::TaskItem(7,"Test Task")));
 		ASSERT_TRUE(bst.insert(BinarySearchTree::TaskItem(6,"Test Task")));
 		ASSERT_TRUE(bst.insert(BinarySearchTree::TaskItem(2,"Test Task")));
-		bst.print();
-  cout << "1";
 		ASSERT_TRUE(bst.remove(BinarySearchTree::TaskItem(7,"Test Task")));
-		cout << "2";
 		ASSERT_TRUE(!bst.exists(BinarySearchTree::TaskItem(7,"Test Task")));
-		cout << "2.5";
-		bst.print();
 		ASSERT_TRUE(level_order(bst.root).compare(expected_tree) == 0);
-		cout << "3";
 		return true;
 	}
 
@@ -197,13 +191,19 @@ public:
   
 		ASSERT_TRUE(insert_nodes(bst, in, 4));
 		ASSERT_TRUE(!bst.remove(BinarySearchTree::TaskItem(9,"Test Task")));
+		bst.print();
 		ASSERT_TRUE(bst.remove(BinarySearchTree::TaskItem(8,"Test Task")));
+		cout << "1";
+		bst.print();
 		ASSERT_TRUE(bst.max() == BinarySearchTree::TaskItem(15,"Test Task"));
 		ASSERT_TRUE(bst.remove(BinarySearchTree::TaskItem(15,"Test Task")));
+		cout << "2";
 		ASSERT_TRUE(bst.max() == BinarySearchTree::TaskItem(10,"Test Task"));
 		ASSERT_TRUE(bst.min() == BinarySearchTree::TaskItem(3,"Test Task"));
 		ASSERT_TRUE(bst.remove(BinarySearchTree::TaskItem(10,"Test Task")));  
+		cout << "3";
 		ASSERT_TRUE(bst.remove(BinarySearchTree::TaskItem(3,"Test Task")));
+		cout << "4";
 		ASSERT_TRUE(bst.root== NULL);
 		ASSERT_TRUE(level_order(bst.root).compare(expected_tree) == 0)
 		return true;
