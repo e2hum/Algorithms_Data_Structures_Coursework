@@ -52,8 +52,8 @@ public:
 	TaskItem min() const;
 	
 	// PURPOSE: Returns the tree height
-	unsigned int height() const;
-	unsigned int height(TaskItem* val) const;
+	unsigned int height();
+	unsigned int height(TaskItem* val);
 	// PURPOSE: Prints the contents of the tree; format not specified
 	void print() const;
 	void in_order(TaskItem* val) const;

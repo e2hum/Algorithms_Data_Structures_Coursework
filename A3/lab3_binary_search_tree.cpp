@@ -48,19 +48,23 @@ BinarySearchTree::TaskItem BinarySearchTree::min() const {
 	return *cur;
 }
 
-unsigned int BinarySearchTree::height(TaskItem* val) const {
+unsigned int BinarySearchTree::height(TaskItem* val) {
 	// Base case: return -1 for empty tree
-	if (!val)
+	if (!val) {
 		return -1;
+	}
 	// General case: return 1 + max(height(left), height(right))
-	else
-		return (1 + std::max(height(val->left), height(val->right)));
+	else {
+		return 1 + std::max(height(val->left), height(val->right));
+	}
 }
 
 // PURPOSE: Returns the tree height
-unsigned int BinarySearchTree::height() const {
+unsigned int BinarySearchTree::height() {
 	TaskItem* cur = root;
-	height(cur);
+	unsigned int tree_height = height(cur);
+	cout << "Tree Height: " << tree_height;
+	return tree_height;
 }
 
 // PURPOSE: Prints the contents of the tree; format not specified
@@ -131,14 +135,14 @@ bool BinarySearchTree::insert( BinarySearchTree::TaskItem val ) {
 			if ((*cur)->priority == val.priority)
 				return false;
 				
-				// move left if given key is smaller than cur's key
-				if (val.priority < (*cur)->priority)
-					cur = &((*cur)->left); // point to the location where
-										   // *cur's left pointer is stored
-				// move right if given key is greater than cur's key
-				else
-					cur = &((*cur)->right); // point to the location where
-										    // *cur's right pointer is stored
+			// move left if given key is smaller than cur's key
+			if (val.priority < (*cur)->priority)
+				cur = &((*cur)->left); // point to the location where
+									   // *cur's left pointer is stored
+			// move right if given key is greater than cur's key
+			else
+				cur = &((*cur)->right); // point to the location where
+									    // *cur's right pointer is stored
 			}
 		*cur = new TaskItem(val);
 		size++;
@@ -171,42 +175,41 @@ bool BinarySearchTree::remove( BinarySearchTree::TaskItem val ) {
 	
 	//case 0, val is root
 	if(val == *root){
-		cout << "case0" << endl;
+		//std::cout << "case0" << endl;
 		if (size==1) {
 			delete root;
 			root = NULL;
+			size--;
 		}
 		else {
 			//FINDS and STORES largest node from left child's branch 
 			TaskItem* cur = root->left;
-			TaskItem* right = root->right;
-			TaskItem* left = root->left;
 			while(cur->right && cur)
 				cur = cur->right;
-			//REMOVES cur from its original position 
+			int prior = cur->priority;
+			string desc = cur->description;
 			BinarySearchTree::remove(*cur);
-			delete root;
-			root = cur;
-			root->left = left;
-			root->right = right;
+			root->priority = prior;
+			root->description = desc;
 		}
-			
 	}
+			
 	//case 1, val is leaf node (no children)
 	else if(children == 0){
-		std::cout << "case1" << endl;
-		if (*(parent->left)==val){
+		//std::cout << "case1" << endl;
+		if (parent->left && *(parent->left)==val){
 			delete parent->left;
 			parent->left = NULL;
 		}else{
 			delete parent->right;
 			parent->right = NULL;
 		}
+		size--;
 	}
 	//case 2, val has single child
 	//alternative for xor: if(!A != !B)
 	else if(children == 1){
-		std::cout << "case2" << endl;
+		//std::cout << "case2" << endl;
 		//create pointer to ONLY child
 		TaskItem* child;
 		if (cur->left)
@@ -229,11 +232,12 @@ bool BinarySearchTree::remove( BinarySearchTree::TaskItem val ) {
 		//delete temp node
 		delete temp;
 		temp = NULL;
+		size--;
 
 	}
 	//case 3, val has two children
 	else{
-		std::cout << "case3" << endl;
+		//std::cout << "case3" << endl;
 		//FINDS and STORES largest node from left child's branch 
 		TaskItem* cur = val.left;
 		while(cur->right && cur)
@@ -247,9 +251,10 @@ bool BinarySearchTree::remove( BinarySearchTree::TaskItem val ) {
 			parent->right = cur;		
 		cur->left = val.left;
 		cur->right = val.right;
+		size--;
 	}
 
-	size--;
+	
 	return true;
 }
 
