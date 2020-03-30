@@ -226,27 +226,19 @@ public:
 		BinarySearchTree bst;
 		ASSERT_TRUE(bst.insert(BinarySearchTree::TaskItem(0,"Test Task")));
 		ASSERT_TRUE(bst.height() == 0);
-		cout << "2";
 		ASSERT_TRUE(bst.insert(BinarySearchTree::TaskItem(10,"Test Task")));
-		bst.print();
 		ASSERT_TRUE(bst.height() == 1);
-		cout << "3";
 		ASSERT_TRUE(bst.insert(BinarySearchTree::TaskItem(-5,"Test Task")));
 		ASSERT_TRUE(bst.height() == 1);
-		cout << "4";
 		ASSERT_TRUE(bst.insert(BinarySearchTree::TaskItem(-2,"Test Task")));
 		ASSERT_TRUE(bst.height() == 2);
-		cout << "5";
 		ASSERT_TRUE(bst.insert(BinarySearchTree::TaskItem(-4,"Test Task")));
 		ASSERT_TRUE(bst.height() == 3);
-		cout << "6";
 		ASSERT_TRUE(bst.insert(BinarySearchTree::TaskItem(-1,"Test Task")));
 		ASSERT_TRUE(bst.height() == 3);
-		cout << "7";
 		ASSERT_TRUE(bst.insert(BinarySearchTree::TaskItem(1,"Test Task")));
 		ASSERT_TRUE(bst.height() == 3);
-		cout << "8";
-		ASSERT_TRUE(level_order(bst.root).compare(expected_tree) == 0)
+		ASSERT_TRUE(level_order(bst.root).compare(expected_tree) == 0);
 		return true;
 	}
 

@@ -48,7 +48,7 @@ BinarySearchTree::TaskItem BinarySearchTree::min() const {
 	return *cur;
 }
 
-unsigned int BinarySearchTree::height(TaskItem* val) {
+int BinarySearchTree::height(TaskItem* val) {
 	// Base case: return -1 for empty tree
 	if (!val) {
 		return -1;
@@ -62,8 +62,9 @@ unsigned int BinarySearchTree::height(TaskItem* val) {
 // PURPOSE: Returns the tree height
 unsigned int BinarySearchTree::height() {
 	TaskItem* cur = root;
-	unsigned int tree_height = height(cur);
-	cout << "Tree Height: " << tree_height;
+	int tree_height = height(cur);
+	if (tree_height < 0)
+		tree_height = 0;
 	return tree_height;
 }
 
@@ -175,7 +176,7 @@ bool BinarySearchTree::remove( BinarySearchTree::TaskItem val ) {
 	
 	//case 0, val is root
 	if(val == *root){
-		//std::cout << "case0" << endl;
+		//cout << "case0" << endl;
 		if (size==1) {
 			delete root;
 			root = NULL;
@@ -196,7 +197,7 @@ bool BinarySearchTree::remove( BinarySearchTree::TaskItem val ) {
 			
 	//case 1, val is leaf node (no children)
 	else if(children == 0){
-		//std::cout << "case1" << endl;
+		//cout << "case1" << endl;
 		if (parent->left && *(parent->left)==val){
 			delete parent->left;
 			parent->left = NULL;
@@ -209,7 +210,7 @@ bool BinarySearchTree::remove( BinarySearchTree::TaskItem val ) {
 	//case 2, val has single child
 	//alternative for xor: if(!A != !B)
 	else if(children == 1){
-		//std::cout << "case2" << endl;
+		//cout << "case2" << endl;
 		//create pointer to ONLY child
 		TaskItem* child;
 		if (cur->left)
@@ -237,24 +238,19 @@ bool BinarySearchTree::remove( BinarySearchTree::TaskItem val ) {
 	}
 	//case 3, val has two children
 	else{
-		//std::cout << "case3" << endl;
-		//FINDS and STORES largest node from left child's branch 
-		TaskItem* cur = val.left;
-		while(cur->right && cur)
-			cur = cur->right;
-		//REMOVES cur from its original position 
-		BinarySearchTree::remove(*cur);
-		//REPLACES val with cur
-		if (*(parent->left)==val)
-			parent->left = cur;
-		else
-			parent->right = cur;		
-		cur->left = val.left;
-		cur->right = val.right;
-		size--;
+		//cout << "case3" << endl;
+		TaskItem* successor = cur;
+		TaskItem* temp = cur->left;
+		while (temp && temp->right) {
+			successor = successor->right;
+			temp = temp->right;
+		}
+		int prior = temp->priority;
+		string desc = temp->description;
+		BinarySearchTree::remove(*temp);
+		cur->priority = prior;
+		cur->description = desc;
 	}
-
-	
 	return true;
 }
 
