@@ -312,10 +312,57 @@ public:
 		
 		test_traversals(test_tree);	
 	}	
+	void test_scenario4(){
+		BinaryTree test_tree;
+		cout << endl << "Find Max Sum of from single branch:" << endl;
+		BinaryTreeNode* root = new BinaryTreeNode(6);
+		root->left = new BinaryTreeNode(10);
+		root->left->right = new BinaryTreeNode(-5);
+		root->left->right->right = new BinaryTreeNode(4);
+		
+		root->right = new BinaryTreeNode(4);
+		root->right->right = new BinaryTreeNode(-6);
+		root->right->right->right = new BinaryTreeNode(7);
+		int max_sum = 0;
+		test_tree.find_max_sum_of_nodes(root, max_sum);
+		cout << "Max sum of the tree is: " << max_sum << endl;
+	}
+	void test_scenario5(){
+		BinaryTree test_tree;
+		cout << endl << "Find Max Sum of symetrical tree" << endl;
+		BinaryTreeNode* root = new BinaryTreeNode(6);
+		root->left = new BinaryTreeNode(-2);
+		root->left->left = new BinaryTreeNode(10);
+		root->right = new BinaryTreeNode(-2);
+		root->right->right = new BinaryTreeNode(10);
+		int max_sum = 0;
+		test_tree.find_max_sum_of_nodes(root, max_sum);
+		cout << "Max sum of the tree is: " << max_sum << endl;
+	}
+	void test_scenario6(){
+		BinaryTree test_tree;
+		cout << endl << "Find Max Sum of a stump (tree with no subtrees)" << endl;
+		BinaryTreeNode* root = new BinaryTreeNode(6);
+		int max_sum = 0;
+		test_tree.find_max_sum_of_nodes(root, max_sum);
+		cout << "Max sum of the tree is: " << max_sum << endl;
+	}
+	
+	void test_scenario7(){
+		BinaryTree test_tree;
+		cout << endl << "Find Max Sum of dirt (empty tree)" << endl;
+		BinaryTreeNode* root = NULL;
+		int max_sum = 0;
+		test_tree.find_max_sum_of_nodes(root, max_sum);
+		cout << "Max sum of the tree is: " << max_sum << endl;
+	}
 
 	void run_tests() {
-		test_scenario();
-		test_scenario0();	
+		test_scenario0();
+		test_scenario4();	
+		test_scenario5();
+		test_scenario6();
+		test_scenario7();
 	}
 };
 
