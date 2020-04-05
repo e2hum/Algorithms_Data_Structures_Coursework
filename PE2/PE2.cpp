@@ -170,7 +170,7 @@ public:
 		if (T->right) 
 			find_and_print_sum_of_nodes(T->right, desired_sum, new_sum, new_buffer);
 	
-		if (T == "") {
+		if (buffer == "") {
 			find_and_print_sum_of_nodes(T->left, desired_sum, 0, "");
 			find_and_print_sum_of_nodes(T->right, desired_sum, 0, "");
 		}
@@ -190,7 +190,12 @@ public:
 		
 		return max1;
 	}
-		
+	
+	int find_max_sum_of_nodes(BinaryTreeNode* T) {
+		int temp_max_sum = 0;
+		find_max_sum_of_nodes(T, temp_max_sum);
+		return temp_max_sum;
+	}
 				
 };
 
@@ -218,7 +223,7 @@ public:
 		BinaryTree test_tree;
 		cout << "Find and Print Sum of Nodes:" << endl;
 		// TEST CASE 1
-		cout << endl << "TEST CASE 1" << endl;
+		cout << endl << "Find and Print Sum of Nodes in Binary Tree" << endl;
 		BinaryTreeNode* root1 = new BinaryTreeNode(5);
 		root1->left = new BinaryTreeNode(3);	
 		root1->right = new BinaryTreeNode(1);
@@ -229,7 +234,7 @@ public:
 		root1->left->right->left = new BinaryTreeNode(6);
 		test_tree.find_and_print_sum_of_nodes(root1, 17, 0, "");
 		// TEST CASE 2
-		cout << endl << "TEST CASE 2" << endl;
+		cout << endl << "Find and Print Sum of Nodes with both sums and individual numbers equal to target sum" << endl;
 		BinaryTreeNode* root2 = new BinaryTreeNode(3);
 		root2->left = new BinaryTreeNode(7);	
 		root2->right = new BinaryTreeNode(8);
@@ -239,6 +244,17 @@ public:
 		root2->right->left->right = new BinaryTreeNode(2);
 		root2->right->left->right->right = new BinaryTreeNode(9);
 		test_tree.find_and_print_sum_of_nodes(root2, 12, 0, "");
+		// TEST CASE 3
+		cout << endl << "Find and Print Sum of Nodes in a tree where no numbers are sums" << endl;
+		BinaryTreeNode* root3 = new BinaryTreeNode(5);
+		root3->left = new BinaryTreeNode(3);	
+		root3->right = new BinaryTreeNode(1);
+		root3->left->left = new BinaryTreeNode(4);
+		root3->left->right = new BinaryTreeNode(9);
+		root3->right->right = new BinaryTreeNode(11);
+		root3->left->left->left = new BinaryTreeNode(28);
+		root3->left->right->left = new BinaryTreeNode(6);
+		test_tree.find_and_print_sum_of_nodes(root3, 2, 0, "");
 	}
 	
 	void test_scenario0() {
@@ -312,6 +328,7 @@ public:
 		
 		test_traversals(test_tree);	
 	}	
+
 	void test_scenario4(){
 		BinaryTree test_tree;
 		cout << endl << "Find Max Sum of from single branch:" << endl;
@@ -323,8 +340,7 @@ public:
 		root->right = new BinaryTreeNode(4);
 		root->right->right = new BinaryTreeNode(-6);
 		root->right->right->right = new BinaryTreeNode(7);
-		int max_sum = 0;
-		test_tree.find_max_sum_of_nodes(root, max_sum);
+		int max_sum = test_tree.find_max_sum_of_nodes(root);
 		cout << "Max sum of the tree is: " << max_sum << endl;
 	}
 	void test_scenario5(){
@@ -335,16 +351,14 @@ public:
 		root->left->left = new BinaryTreeNode(10);
 		root->right = new BinaryTreeNode(-2);
 		root->right->right = new BinaryTreeNode(10);
-		int max_sum = 0;
-		test_tree.find_max_sum_of_nodes(root, max_sum);
+		int max_sum = test_tree.find_max_sum_of_nodes(root);
 		cout << "Max sum of the tree is: " << max_sum << endl;
 	}
 	void test_scenario6(){
 		BinaryTree test_tree;
 		cout << endl << "Find Max Sum of a stump (tree with no subtrees)" << endl;
 		BinaryTreeNode* root = new BinaryTreeNode(6);
-		int max_sum = 0;
-		test_tree.find_max_sum_of_nodes(root, max_sum);
+		int max_sum = test_tree.find_max_sum_of_nodes(root);
 		cout << "Max sum of the tree is: " << max_sum << endl;
 	}
 	
@@ -352,17 +366,17 @@ public:
 		BinaryTree test_tree;
 		cout << endl << "Find Max Sum of dirt (empty tree)" << endl;
 		BinaryTreeNode* root = NULL;
-		int max_sum = 0;
-		test_tree.find_max_sum_of_nodes(root, max_sum);
+		int max_sum = test_tree.find_max_sum_of_nodes(root);
 		cout << "Max sum of the tree is: " << max_sum << endl;
 	}
 
 	void run_tests() {
+		test_scenario();
 		test_scenario0();
 		test_scenario4();	
 		test_scenario5();
 		test_scenario6();
-		test_scenario7();
+		test_scenario7();	
 	}
 };
 
