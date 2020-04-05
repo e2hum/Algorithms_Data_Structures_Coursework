@@ -165,20 +165,15 @@ public:
 		
 		if (new_sum == desired_sum)
 			cout << new_buffer << endl;
-		cout <<  "NEW SUM: " << new_sum << endl;
-		if (new_sum < desired_sum) { 
-			if (T->left)
-				find_and_print_sum_of_nodes(T->left, desired_sum, new_sum, new_buffer);
-			if (T->right) {
-				cout << "NEWER SUMM: " << new_sum << endl;
-				find_and_print_sum_of_nodes(T->right, desired_sum, new_sum, new_buffer);
-				}
-			}
-		cout << "RESET" << endl;
-		if (T->left)
+		if (T->left) 
+			find_and_print_sum_of_nodes(T->left, desired_sum, new_sum, new_buffer);
+		if (T->right) 
+			find_and_print_sum_of_nodes(T->right, desired_sum, new_sum, new_buffer);
+	
+		if (T == "") {
 			find_and_print_sum_of_nodes(T->left, desired_sum, 0, "");
-		if (T->right)
 			find_and_print_sum_of_nodes(T->right, desired_sum, 0, "");
+		}
 	} 
 	
 	int find_max_sum_of_nodes(BinaryTreeNode* T, int & temp_max_sum) {
