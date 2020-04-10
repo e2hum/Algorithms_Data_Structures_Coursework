@@ -70,7 +70,7 @@ public:
 		return exists(root, key);
 	}
 
-	
+	//inserts in BST manner
 	bool insert(BinaryTreeNode new_node) {
 		BinaryTreeNode** cur = &root;
 		while (*cur) {
